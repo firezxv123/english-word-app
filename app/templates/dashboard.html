@@ -1,0 +1,401 @@
+{% extends "base.html" %}
+
+{% block title %}仪表板 - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="dashboard-header">
+        <div class="welcome-banner">
+            <h1>🏠 学习仪表板</h1>
+            <p class="welcome-message">欢迎回来，{{ user.username }}！继续您的英语学习之旅</p>
+            <div class="user-badge">
+                <span class="badge-grade">{{ user.grade }}年级</span>
+                <span class="badge-unit">第{{ user.current_unit }}单元</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 快速操作 -->
+    <section class="quick-actions">
+        <h2 class="section-title">⚡ 快速操作</h2>
+        <div class="actions-grid">
+            <a href="{{ url_for('main.study_page', user_id=user.id) }}" class="action-card study-action">
+                <div class="action-icon">📖</div>
+                <div class="action-title">开始学习</div>
+                <div class="action-desc">继续学习新单词</div>
+            </a>
+            
+            <a href="{{ url_for('main.test_page', user_id=user.id) }}" class="action-card test-action">
+                <div class="action-icon">📝</div>
+                <div class="action-title">进行测验</div>
+                <div class="action-desc">检验学习成果</div>
+            </a>
+            
+            <a href="{{ url_for('main.study_review', user_id=user.id) }}" class="action-card review-action">
+                <div class="action-icon">🧠</div>
+                <div class="action-title">智能复习</div>
+                <div class="action-desc">复习薄弱单词</div>
+            </a>
+            
+            <a href="{{ url_for('main.study_progress', user_id=user.id) }}" class="action-card progress-action">
+                <div class="action-icon">📊</div>
+                <div class="action-title">查看进度</div>
+                <div class="action-desc">学习数据分析</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- 学习概况 -->
+    <section class="learning-overview">
+        <h2 class="section-title">📈 学习概况</h2>
+        <div class="overview-grid" id="overviewGrid">
+            <!-- 数据将通过JavaScript加载 -->
+            <div class="overview-card loading">
+                <div class="card-icon">📚</div>
+                <div class="card-content">
+                    <div class="card-label">已学习单词</div>
+                    <div class="card-value" id="studiedWords">-</div>
+                </div>
+            </div>
+            
+            <div class="overview-card loading">
+                <div class="card-icon">⭐</div>
+                <div class="card-content">
+                    <div class="card-label">已掌握单词</div>
+                    <div class="card-value" id="masteredWords">-</div>
+                </div>
+            </div>
+            
+            <div class="overview-card loading">
+                <div class="card-icon">📊</div>
+                <div class="card-content">
+                    <div class="card-label">掌握率</div>
+                    <div class="card-value" id="masteryRate">-</div>
+                </div>
+            </div>
+            
+            <div class="overview-card loading">
+                <div class="card-icon">📝</div>
+                <div class="card-content">
+                    <div class="card-label">测验次数</div>
+                    <div class="card-value" id="testCount">-</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 最近活动 -->
+    <section class="recent-activity">
+        <h2 class="section-title">📋 最近活动</h2>
+        <div class="activity-container">
+            <div class="activity-tabs">
+                <button class="tab-btn active" data-tab="recent-study">最近学习</button>
+                <button class="tab-btn" data-tab="recent-tests">最近测验</button>
+            </div>
+            
+            <div class="tab-content">
+                <div class="tab-pane active" id="recent-study">
+                    <div class="activity-list" id="recentStudyList">
+                        <!-- 最近学习记录 -->
+                    </div>
+                </div>
+                
+                <div class="tab-pane" id="recent-tests">
+                    <div class="activity-list" id="recentTestsList">
+                        <!-- 最近测验记录 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+.dashboard-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--white);
+    padding: var(--spacing-xxl) 0;
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+    border-radius: var(--border-radius-lg);
+}
+
+.welcome-banner h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.welcome-message {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.9;
+}
+
+.user-badge {
+    display: inline-flex;
+    gap: var(--spacing-sm);
+}
+
+.badge-grade,
+.badge-unit {
+    background: rgba(255, 255, 255, 0.2);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--border-radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.section-title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xxl);
+}
+
+.action-card {
+    background: var(--white);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-base);
+    text-align: center;
+    text-decoration: none;
+    transition: all var(--transition-base);
+    border: 1px solid var(--border-light);
+}
+
+.action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+}
+
+.action-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.action-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.action-desc {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xxl);
+}
+
+.overview-card {
+    background: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-base);
+    text-align: center;
+    border: 1px solid var(--border-light);
+}
+
+.card-icon {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.card-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+.activity-container {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-base);
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+}
+
+.activity-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: var(--spacing-md);
+    border: none;
+    background: var(--bg-light);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.tab-btn.active {
+    background: var(--white);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.tab-content {
+    padding: var(--spacing-lg);
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.activity-list {
+    min-height: 200px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .dashboard-header {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .actions-grid,
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userId = {{ user.id }};
+    
+    // 加载仪表板数据
+    loadDashboardData(userId);
+    
+    // 标签页切换
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabId = this.dataset.tab;
+            switchTab(tabId);
+        });
+    });
+});
+
+async function loadDashboardData(userId) {
+    try {
+        const response = await ApiClient.users.getDashboard(userId);
+        if (response.success) {
+            updateDashboardStats(response.data);
+            loadRecentActivity(response.data);
+        }
+    } catch (error) {
+        console.error('加载仪表板数据失败:', error);
+    }
+}
+
+function updateDashboardStats(data) {
+    document.getElementById('studiedWords').textContent = data.study_progress.total_studied;
+    document.getElementById('masteredWords').textContent = data.study_progress.mastered;
+    document.getElementById('masteryRate').textContent = data.study_progress.mastery_rate + '%';
+    document.getElementById('testCount').textContent = data.test_statistics.total_tests;
+    
+    // 移除加载状态
+    document.querySelectorAll('.overview-card').forEach(card => {
+        card.classList.remove('loading');
+    });
+}
+
+function loadRecentActivity(data) {
+    // 最近学习记录
+    const studyList = document.getElementById('recentStudyList');
+    if (data.recent_tests && data.recent_tests.length > 0) {
+        studyList.innerHTML = data.recent_tests.slice(0, 5).map(test => `
+            <div class="activity-item">
+                <div class="activity-icon">📝</div>
+                <div class="activity-content">
+                    <div class="activity-title">${test.test_type_name}测验</div>
+                    <div class="activity-desc">得分: ${test.score}%</div>
+                </div>
+                <div class="activity-time">${formatRelativeTime(test.tested_at)}</div>
+            </div>
+        `).join('');
+    } else {
+        studyList.innerHTML = '<p class="empty-text">暂无学习记录</p>';
+    }
+    
+    // 最近测验记录
+    const testsList = document.getElementById('recentTestsList');
+    if (data.recent_tests && data.recent_tests.length > 0) {
+        testsList.innerHTML = data.recent_tests.map(test => `
+            <div class="activity-item">
+                <div class="activity-icon">📊</div>
+                <div class="activity-content">
+                    <div class="activity-title">${test.test_type_name}</div>
+                    <div class="activity-desc">${test.correct_answers}/${test.total_questions} 正确</div>
+                </div>
+                <div class="activity-score score-${test.score >= 80 ? 'high' : test.score >= 60 ? 'medium' : 'low'}">
+                    ${test.score}%
+                </div>
+            </div>
+        `).join('');
+    } else {
+        testsList.innerHTML = '<p class="empty-text">暂无测验记录</p>';
+    }
+}
+
+function switchTab(tabId) {
+    // 切换标签按钮状态
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+    
+    // 切换标签页内容
+    document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.remove('active');
+    });
+    document.getElementById(tabId).classList.add('active');
+}
+
+function formatRelativeTime(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffHours / 24);
+    
+    if (diffHours < 1) return '刚刚';
+    if (diffHours < 24) return `${diffHours}小时前`;
+    if (diffDays < 7) return `${diffDays}天前`;
+    return date.toLocaleDateString();
+}
+</script>
+{% endblock %}

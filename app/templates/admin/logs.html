@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+
+{% block title %}系统日志 - 小学英语单词复习应用{% endblock %}
+
+{% block extra_css %}
+<style>
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-xl) 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    border-radius: var(--border-radius-lg);
+}
+
+.admin-header h1 {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-xxl);
+}
+
+.log-controls {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.control-row {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: end;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-md);
+}
+
+.control-row .form-group {
+    flex: 1;
+    min-width: 150px;
+}
+
+.log-viewer {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.log-header {
+    background: var(--gray-100);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-content {
+    height: 600px;
+    overflow-y: auto;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: var(--spacing-md);
+}
+
+.log-line {
+    margin-bottom: 2px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.log-line.error {
+    color: #ff6b6b;
+}
+
+.log-line.warning {
+    color: #ffd93d;
+}
+
+.log-line.info {
+    color: #74c0fc;
+}
+
+.log-line.debug {
+    color: #51cf66;
+}
+
+.log-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-card {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+}
+
+.stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.loading {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .control-row {
+        flex-direction: column;
+    }
+    
+    .control-row .form-group {
+        min-width: auto;
+    }
+    
+    .log-header {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        align-items: stretch;
+    }
+    
+    .log-content {
+        height: 400px;
+        font-size: 12px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <section class="admin-header">
+        <h1>🔍 系统日志</h1>
+        <p>查看和管理应用系统日志</p>
+    </section>
+
+    <!-- 日志统计 -->
+    <section class="log-stats">
+        <div class="stat-card">
+            <div class="stat-value" id="totalLines">-</div>
+            <div class="stat-label">总日志行数</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value" id="errorCount">-</div>
+            <div class="stat-label">错误数量</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value" id="warningCount">-</div>
+            <div class="stat-label">警告数量</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value" id="lastUpdate">-</div>
+            <div class="stat-label">最后更新</div>
+        </div>
+    </section>
+
+    <!-- 日志控制 -->
+    <section class="log-controls">
+        <div class="control-row">
+            <div class="form-group">
+                <label for="logLevel" class="form-label">日志级别：</label>
+                <select id="logLevel" class="form-select">
+                    <option value="all">全部</option>
+                    <option value="error">错误</option>
+                    <option value="warning">警告</option>
+                    <option value="info">信息</option>
+                    <option value="debug">调试</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="logLines" class="form-label">显示行数：</label>
+                <select id="logLines" class="form-select">
+                    <option value="50">50行</option>
+                    <option value="100" selected>100行</option>
+                    <option value="200">200行</option>
+                    <option value="500">500行</option>
+                    <option value="1000">1000行</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <button id="refreshLogs" class="btn btn-primary">
+                    🔄 刷新日志
+                </button>
+                <button id="clearLogs" class="btn btn-warning">
+                    🗑️ 清空日志
+                </button>
+                <button id="downloadLogs" class="btn btn-secondary">
+                    📥 下载日志
+                </button>
+            </div>
+        </div>
+        
+        <div class="control-row">
+            <label>
+                <input type="checkbox" id="autoRefresh"> 自动刷新 (每30秒)
+            </label>
+        </div>
+    </section>
+
+    <!-- 日志查看器 -->
+    <section class="log-viewer">
+        <div class="log-header">
+            <h3>日志内容</h3>
+            <span id="logStatus">准备就绪</span>
+        </div>
+        <div class="log-content" id="logContent">
+            <div class="loading">正在加载日志...</div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const logContent = document.getElementById('logContent');
+    const logLevel = document.getElementById('logLevel');
+    const logLines = document.getElementById('logLines');
+    const refreshBtn = document.getElementById('refreshLogs');
+    const clearBtn = document.getElementById('clearLogs');
+    const downloadBtn = document.getElementById('downloadLogs');
+    const autoRefreshCheck = document.getElementById('autoRefresh');
+    const logStatus = document.getElementById('logStatus');
+    
+    let autoRefreshInterval = null;
+    
+    // 加载日志
+    function loadLogs() {
+        const level = logLevel.value;
+        const lines = logLines.value;
+        
+        logStatus.textContent = '加载中...';
+        
+        fetch(`/admin/logs/api?level=${level}&lines=${lines}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayLogs(data.data);
+                    updateStats(data.data);
+                    logStatus.textContent = `已加载 ${data.count} 行日志`;
+                } else {
+                    logContent.innerHTML = `<div class="error">加载失败: ${data.error}</div>`;
+                    logStatus.textContent = '加载失败';
+                }
+            })
+            .catch(error => {
+                console.error('加载日志失败:', error);
+                logContent.innerHTML = `<div class="error">加载失败: ${error.message}</div>`;
+                logStatus.textContent = '加载失败';
+            });
+    }
+    
+    // 显示日志
+    function displayLogs(logs) {
+        if (logs.length === 0) {
+            logContent.innerHTML = '<div class="loading">暂无日志数据</div>';
+            return;
+        }
+        
+        const html = logs.map(log => {
+            let className = 'log-line';
+            
+            if (log.includes('ERROR')) {
+                className += ' error';
+            } else if (log.includes('WARNING')) {
+                className += ' warning';
+            } else if (log.includes('INFO')) {
+                className += ' info';
+            } else if (log.includes('DEBUG')) {
+                className += ' debug';
+            }
+            
+            return `<div class="${className}">${escapeHtml(log)}</div>`;
+        }).join('');
+        
+        logContent.innerHTML = html;
+        
+        // 滚动到底部
+        logContent.scrollTop = logContent.scrollHeight;
+    }
+    
+    // 更新统计
+    function updateStats(logs) {
+        const totalLines = logs.length;
+        const errorCount = logs.filter(log => log.includes('ERROR')).length;
+        const warningCount = logs.filter(log => log.includes('WARNING')).length;
+        const lastUpdate = new Date().toLocaleString();
+        
+        document.getElementById('totalLines').textContent = totalLines;
+        document.getElementById('errorCount').textContent = errorCount;
+        document.getElementById('warningCount').textContent = warningCount;
+        document.getElementById('lastUpdate').textContent = lastUpdate;
+    }
+    
+    // HTML转义
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // 清空日志
+    function clearLogs() {
+        if (!confirm('确定要清空所有日志吗？此操作不可撤销。')) {
+            return;
+        }
+        
+        fetch('/admin/logs/clear', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('日志已清空');
+                    loadLogs();
+                } else {
+                    alert('清空失败: ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('清空失败: ' + error.message);
+            });
+    }
+    
+    // 下载日志
+    function downloadLogs() {
+        window.location.href = '/admin/logs/download';
+    }
+    
+    // 自动刷新
+    function toggleAutoRefresh() {
+        if (autoRefreshCheck.checked) {
+            autoRefreshInterval = setInterval(loadLogs, 30000);
+        } else {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+                autoRefreshInterval = null;
+            }
+        }
+    }
+    
+    // 事件监听
+    refreshBtn.addEventListener('click', loadLogs);
+    clearBtn.addEventListener('click', clearLogs);
+    downloadBtn.addEventListener('click', downloadLogs);
+    autoRefreshCheck.addEventListener('change', toggleAutoRefresh);
+    
+    logLevel.addEventListener('change', loadLogs);
+    logLines.addEventListener('change', loadLogs);
+    
+    // 初始加载
+    loadLogs();
+});
+</script>
+{% endblock %}

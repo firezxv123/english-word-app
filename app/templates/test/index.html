@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+
+{% block title %}测验中心 - {{ user.username }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/test.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="test-header">
+        <div class="user-welcome">
+            <h1>📝 测验中心</h1>
+            <p class="welcome-text">检验学习成果，巩固记忆效果</p>
+            <div class="user-info-card">
+                <span class="info-item">👤 {{ user.username }}</span>
+                <span class="info-item">📚 {{ user.grade }}年级</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="test-options">
+        <h2 class="section-title">📋 测验选项</h2>
+        
+        <div class="test-grid">
+            <!-- 快速测验 -->
+            <div class="test-card">
+                <div class="card-icon">⚡</div>
+                <h3 class="card-title">快速测验</h3>
+                <p class="card-description">10道题目，快速检验学习效果</p>
+                
+                <div class="test-config">
+                    <div class="config-item">
+                        <label class="config-label">测验类型：</label>
+                        <select id="quickTestType" class="form-select-sm">
+                            <option value="cn_to_en">中译英</option>
+                            <option value="en_to_cn">英译中</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button id="startQuickTest" class="btn btn-primary btn-block">
+                        开始快速测验
+                    </button>
+                </div>
+            </div>
+
+            <!-- 单元测验 -->
+            <div class="test-card">
+                <div class="card-icon">📚</div>
+                <h3 class="card-title">单元测验</h3>
+                <p class="card-description">针对特定单元的专项测验</p>
+                
+                <div class="test-config">
+                    <div class="config-item">
+                        <label class="config-label">测验类型：</label>
+                        <select id="unitTestType" class="form-select-sm">
+                            <option value="cn_to_en">中译英</option>
+                            <option value="en_to_cn">英译中</option>
+                        </select>
+                    </div>
+                    <div class="config-item">
+                        <label class="config-label">选择单元：</label>
+                        <select id="unitTestSelect" class="form-select-sm">
+                            <option value="">请选择单元</option>
+                            {% for unit in units %}
+                            <option value="{{ unit }}">第{{ unit }}单元</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="config-item">
+                        <label class="config-label">题目数量：</label>
+                        <select id="unitQuestionCount" class="form-select-sm">
+                            <option value="10" selected>10题</option>
+                            <option value="20">20题</option>
+                            <option value="30">30题</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button id="startUnitTest" class="btn btn-secondary btn-block">
+                        开始单元测验
+                    </button>
+                </div>
+            </div>
+
+            <!-- 综合测验 -->
+            <div class="test-card">
+                <div class="card-icon">🎯</div>
+                <h3 class="card-title">综合测验</h3>
+                <p class="card-description">全年级范围的综合性测验</p>
+                
+                <div class="test-config">
+                    <div class="config-item">
+                        <label class="config-label">测验模式：</label>
+                        <select id="comprehensiveMode" class="form-select-sm">
+                            <option value="mixed">混合模式</option>
+                            <option value="cn_to_en">仅中译英</option>
+                            <option value="en_to_cn">仅英译中</option>
+                        </select>
+                    </div>
+                    <div class="config-item">
+                        <label class="config-label">题目数量：</label>
+                        <select id="comprehensiveCount" class="form-select-sm">
+                            <option value="20" selected>20题</option>
+                            <option value="30">30题</option>
+                            <option value="50">50题</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button id="startComprehensiveTest" class="btn btn-success btn-block">
+                        开始综合测验
+                    </button>
+                </div>
+            </div>
+
+            <!-- 错题重练 -->
+            <div class="test-card">
+                <div class="card-icon">🔄</div>
+                <h3 class="card-title">错题重练</h3>
+                <p class="card-description">重新测验之前做错的题目</p>
+                
+                <div class="retry-info">
+                    <p class="info-text">针对性复习，提高薄弱环节</p>
+                </div>
+                
+                <div class="card-actions">
+                    <button id="startRetryTest" class="btn btn-warning btn-block">
+                        开始错题重练
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% if recent_tests %}
+    <section class="recent-tests">
+        <h2 class="section-title">📊 最近测验</h2>
+        
+        <div class="test-history">
+            {% for test in recent_tests %}
+            <div class="history-item">
+                <div class="test-info">
+                    <div class="test-type">{{ test.test_type_name }}</div>
+                    <div class="test-score score-{{ 'high' if test.score >= 80 else 'medium' if test.score >= 60 else 'low' }}">
+                        {{ test.score }}%
+                    </div>
+                </div>
+                <div class="test-details">
+                    <div class="detail-item">{{ test.correct_answers }}/{{ test.total_questions }} 正确</div>
+                    <div class="detail-item">
+                        {% if test.tested_at %}
+                            {{ test.tested_at.strftime('%m-%d %H:%M') if test.tested_at.__class__.__name__ == 'datetime' else test.tested_at[:16][5:] if test.tested_at else '-' }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="test-actions">
+                    {% if test.wrong_word_ids %}
+                    <button class="btn btn-sm btn-outline-warning" onclick="retryTest('{{ test.id }}')">
+                        重做错题
+                    </button>
+                    {% endif %}
+                    <button class="btn btn-sm btn-outline-info" onclick="viewResult('{{ test.id }}')">
+                        查看详情
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="history-actions">
+            <a href="{{ url_for('main.test_history', user_id=user.id) }}" class="btn btn-outline-primary">
+                查看全部历史
+            </a>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if test_stats %}
+    <section class="test-statistics">
+        <h2 class="section-title">📈 测验统计</h2>
+        
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-content">
+                    <div class="stat-title">总测验次数</div>
+                    <div class="stat-value">{{ test_stats.stats_30days.total_tests }}</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <div class="stat-title">平均分数</div>
+                    <div class="stat-value">{{ test_stats.stats_30days.average_score }}%</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-content">
+                    <div class="stat-title">总答题数</div>
+                    <div class="stat-value">{{ test_stats.stats_30days.total_questions }}</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-content">
+                    <div class="stat-title">正确率</div>
+                    <div class="stat-value">
+                        {% if test_stats.stats_30days.total_questions > 0 %}
+                        {{ ((test_stats.stats_30days.total_correct / test_stats.stats_30days.total_questions) * 100)|round(1) }}%
+                        {% else %}0%{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-actions">
+            <a href="{{ url_for('main.test_statistics', user_id=user.id) }}" class="btn btn-outline-secondary">
+                查看详细统计
+            </a>
+        </div>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// 确保页面加载完成后再执行
+document.addEventListener('DOMContentLoaded', function() {
+    // 检查必要的对象是否存在
+    if (typeof ApiClient === 'undefined') {
+        console.error('ApiClient 未定义，检查 api-client.js 是否正确加载');
+        return;
+    }
+    
+    if (typeof WordApp === 'undefined') {
+        console.error('WordApp 未定义，检查 main.js 是否正确加载');
+        return;
+    }
+    
+    const userId = {{ user.id }};
+    
+    // 快速测验
+    const quickTestBtn = document.getElementById('startQuickTest');
+    if (quickTestBtn) {
+        quickTestBtn.addEventListener('click', function() {
+            const testType = document.getElementById('quickTestType').value;
+            startTest(testType, null, 10);
+        });
+    } else {
+        console.error('快速测验按钮未找到');
+    }
+    
+    // 单元测验
+    const unitTestBtn = document.getElementById('startUnitTest');
+    if (unitTestBtn) {
+        unitTestBtn.addEventListener('click', function() {
+            const testType = document.getElementById('unitTestType').value;
+            const unit = document.getElementById('unitTestSelect').value;
+            const count = document.getElementById('unitQuestionCount').value;
+            
+            if (!unit) {
+                const errorMsg = '请选择测验单元';
+                if (typeof WordApp !== 'undefined' && WordApp.showAlert) {
+                    WordApp.showAlert(errorMsg, 'warning');
+                } else {
+                    alert(errorMsg);
+                }
+                return;
+            }
+            
+            startTest(testType, parseInt(unit) || null, parseInt(count) || 10);
+        });
+    } else {
+        console.error('单元测验按钮未找到');
+    }
+    
+    // 综合测验
+    const comprehensiveTestBtn = document.getElementById('startComprehensiveTest');
+    if (comprehensiveTestBtn) {
+        comprehensiveTestBtn.addEventListener('click', function() {
+            const mode = document.getElementById('comprehensiveMode').value;
+            const count = document.getElementById('comprehensiveCount').value;
+            
+            const testType = mode === 'mixed' ? 'cn_to_en' : mode;
+            startTest(testType, null, parseInt(count));
+        });
+    } else {
+        console.error('综合测验按钮未找到');
+    }
+    
+    // 错题重练
+    const retryTestBtn = document.getElementById('startRetryTest');
+    if (retryTestBtn) {
+        retryTestBtn.addEventListener('click', function() {
+            // 这里需要获取最近的错题测验ID
+            const message = '功能开发中，敬请期待';
+            if (typeof WordApp !== 'undefined' && WordApp.showAlert) {
+                WordApp.showAlert(message, 'info');
+            } else {
+                alert(message);
+            }
+        });
+    } else {
+        console.error('错题重练按钮未找到');
+    }
+});
+
+async function startTest(testType, unit, questionCount) {
+    try {
+        // 检查 API 客户端是否可用
+        if (typeof ApiClient === 'undefined') {
+            console.error('ApiClient 未定义');
+            alert('系统错误：API客户端未加载，请刷新页面重试');
+            return;
+        }
+        
+        // 检查 WordApp 是否可用
+        if (typeof WordApp === 'undefined') {
+            console.error('WordApp 未定义');
+            alert('系统错误：应用对象未加载，请刷新页面重试');
+            return;
+        }
+        
+        // 安全处理参数
+        const safeUnit = (unit && unit !== '') ? parseInt(unit) : null;
+        const safeQuestionCount = questionCount && questionCount > 0 ? parseInt(questionCount) : 10;
+        
+        const response = await ApiClient.test.generate(
+            {{ user.id }}, 
+            testType, 
+            {{ user.grade }}, 
+            safeUnit, 
+            safeQuestionCount
+        );
+        
+        if (response.success) {
+            // 跳转到测验页面
+            window.location.href = `/test/session/${response.data.test_id}`;
+        } else {
+            const errorMsg = response.error || '创建测验失败';
+            console.error('测验创建失败:', errorMsg);
+            if (typeof WordApp !== 'undefined' && WordApp.showAlert) {
+                WordApp.showAlert(errorMsg, 'error');
+            } else {
+                alert(errorMsg);
+            }
+        }
+    } catch (error) {
+        console.error('创建测验失败:', error);
+        const errorMsg = '创建测验失败，请稍后重试';
+        if (typeof WordApp !== 'undefined' && WordApp.showAlert) {
+            WordApp.showAlert(errorMsg, 'error');
+        } else {
+            alert(errorMsg);
+        }
+    }
+}
+
+function retryTest(testId) {
+    // 重做错题
+    window.location.href = `/test/{{ user.id }}/retry/${testId}`;
+}
+
+function viewResult(testId) {
+    // 查看测验结果
+    window.location.href = `/test/result/${testId}`;
+}
+</script>
+{% endblock %}

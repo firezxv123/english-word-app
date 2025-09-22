@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+
+{% block title %}数据导出 - 小学英语单词复习应用{% endblock %}
+
+{% block extra_css %}
+<style>
+.export-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.export-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-xl) 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    border-radius: var(--border-radius-lg);
+}
+
+.export-header h1 {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-xxl);
+}
+
+.export-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.export-section {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--primary-light);
+}
+
+.section-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.section-title {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: var(--font-size-xl);
+}
+
+.export-form {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-row {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    align-items: end;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.format-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.format-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--white);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.format-btn:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-light);
+    color: var(--primary-color);
+}
+
+.format-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.format-icon {
+    font-size: 1.5rem;
+}
+
+.format-name {
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+}
+
+.format-desc {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.user-selector {
+    margin-bottom: var(--spacing-lg);
+}
+
+.user-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--gray-50);
+}
+
+.user-item {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.user-item:hover {
+    background: var(--primary-light);
+}
+
+.user-item.selected {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.user-item:last-child {
+    border-bottom: none;
+}
+
+.user-name {
+    font-weight: var(--font-weight-medium);
+}
+
+.user-grade {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.user-item.selected .user-grade {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.preview-section {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+}
+
+.preview-content {
+    background: var(--gray-50);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    font-family: monospace;
+    font-size: var(--font-size-sm);
+    max-height: 200px;
+    overflow: auto;
+}
+
+.export-progress {
+    margin-top: var(--spacing-md);
+    display: none;
+}
+
+.export-progress.show {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .export-sections {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .format-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="export-container">
+    <section class="export-header">
+        <h1>📤 数据导出</h1>
+        <p>导出词库和学习报告数据</p>
+    </section>
+
+    <div class="export-sections">
+        <!-- 词库导出 -->
+        <div class="export-section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">词库导出</h2>
+            </div>
+
+            <form class="export-form" id="wordsExportForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="wordsGrade" class="form-label">年级：</label>
+                        <select id="wordsGrade" name="grade" class="form-select">
+                            <option value="">所有年级</option>
+                            <option value="3">三年级</option>
+                            <option value="4">四年级</option>
+                            <option value="5">五年级</option>
+                            <option value="6">六年级</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="wordsUnit" class="form-label">单元：</label>
+                        <select id="wordsUnit" name="unit" class="form-select">
+                            <option value="">所有单元</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="format-buttons" id="wordsFormats">
+                    <a href="#" class="format-btn" data-format="csv">
+                        <span class="format-icon">📄</span>
+                        <span class="format-name">CSV格式</span>
+                        <span class="format-desc">Excel兼容</span>
+                    </a>
+                    <a href="#" class="format-btn" data-format="json">
+                        <span class="format-icon">🔧</span>
+                        <span class="format-name">JSON格式</span>
+                        <span class="format-desc">程序数据</span>
+                    </a>
+                    <a href="#" class="format-btn" data-format="pdf">
+                        <span class="format-icon">📋</span>
+                        <span class="format-name">PDF格式</span>
+                        <span class="format-desc">打印友好</span>
+                    </a>
+                </div>
+
+                <div class="export-progress" id="wordsProgress">
+                    <div class="progress-text">正在导出...</div>
+                </div>
+            </form>
+        </div>
+
+        <!-- 学习报告导出 -->
+        <div class="export-section">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <h2 class="section-title">学习报告导出</h2>
+            </div>
+
+            <div class="user-selector">
+                <label class="form-label">选择用户：</label>
+                <div class="user-list" id="userList">
+                    <!-- 用户列表将通过JavaScript动态加载 -->
+                </div>
+            </div>
+
+            <div class="format-buttons" id="reportFormats">
+                <a href="#" class="format-btn" data-format="csv">
+                    <span class="format-icon">📄</span>
+                    <span class="format-name">学习记录</span>
+                    <span class="format-desc">CSV格式</span>
+                </a>
+                <a href="#" class="format-btn" data-format="pdf">
+                    <span class="format-icon">📋</span>
+                    <span class="format-name">学习报告</span>
+                    <span class="format-desc">PDF格式</span>
+                </a>
+            </div>
+
+            <div class="export-progress" id="reportProgress">
+                <div class="progress-text">正在生成报告...</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const wordsGrade = document.getElementById('wordsGrade');
+    const wordsUnit = document.getElementById('wordsUnit');
+    const wordsFormats = document.getElementById('wordsFormats');
+    const reportFormats = document.getElementById('reportFormats');
+    const userList = document.getElementById('userList');
+    
+    let selectedUser = null;
+    
+    // 年级变化时更新单元选项
+    wordsGrade.addEventListener('change', function() {
+        updateUnitOptions(this.value);
+    });
+    
+    // 词库导出格式按钮
+    wordsFormats.addEventListener('click', function(e) {
+        if (e.target.closest('.format-btn')) {
+            e.preventDefault();
+            const formatBtn = e.target.closest('.format-btn');
+            const format = formatBtn.dataset.format;
+            exportWords(format);
+        }
+    });
+    
+    // 学习报告导出格式按钮
+    reportFormats.addEventListener('click', function(e) {
+        if (e.target.closest('.format-btn')) {
+            e.preventDefault();
+            const formatBtn = e.target.closest('.format-btn');
+            const format = formatBtn.dataset.format;
+            
+            if (!selectedUser) {\n                showNotification('请先选择用户', 'warning');\n                return;\n            }\n            \n            exportReport(selectedUser.id, format);\n        }\n    });\n    \n    // 用户列表点击\n    userList.addEventListener('click', function(e) {\n        const userItem = e.target.closest('.user-item');\n        if (userItem) {\n            // 移除之前的选中状态\n            document.querySelectorAll('.user-item').forEach(item => {\n                item.classList.remove('selected');\n            });\n            \n            // 设置当前选中\n            userItem.classList.add('selected');\n            selectedUser = {\n                id: parseInt(userItem.dataset.userId),\n                username: userItem.dataset.username\n            };\n        }\n    });\n    \n    // 更新单元选项\n    function updateUnitOptions(grade) {\n        wordsUnit.innerHTML = '<option value=\"\">所有单元</option>';\n        \n        if (!grade) return;\n        \n        ApiClient.get(`/words/units/${grade}`)\n            .then(response => {\n                if (response.success) {\n                    response.data.forEach(unit => {\n                        const option = document.createElement('option');\n                        option.value = unit;\n                        option.textContent = `第${unit}单元`;\n                        wordsUnit.appendChild(option);\n                    });\n                }\n            })\n            .catch(error => {\n                console.error('获取单元列表失败:', error);\n            });\n    }\n    \n    // 导出单词\n    function exportWords(format) {\n        const grade = wordsGrade.value;\n        const unit = wordsUnit.value;\n        \n        const params = new URLSearchParams();\n        if (grade) params.append('grade', grade);\n        if (unit) params.append('unit', unit);\n        \n        const progressElement = document.getElementById('wordsProgress');\n        progressElement.classList.add('show');\n        \n        const url = `/api/export/words/${format}?${params.toString()}`;\n        \n        // 创建隐藏的下载链接\n        const link = document.createElement('a');\n        link.href = url;\n        link.style.display = 'none';\n        document.body.appendChild(link);\n        link.click();\n        document.body.removeChild(link);\n        \n        // 隐藏进度条\n        setTimeout(() => {\n            progressElement.classList.remove('show');\n            showNotification('导出完成', 'success');\n        }, 1000);\n    }\n    \n    // 导出学习报告\n    function exportReport(userId, format) {\n        const progressElement = document.getElementById('reportProgress');\n        progressElement.classList.add('show');\n        \n        const url = `/api/export/study-report/${userId}/${format}`;\n        \n        // 创建隐藏的下载链接\n        const link = document.createElement('a');\n        link.href = url;\n        link.style.display = 'none';\n        document.body.appendChild(link);\n        link.click();\n        document.body.removeChild(link);\n        \n        // 隐藏进度条\n        setTimeout(() => {\n            progressElement.classList.remove('show');\n            showNotification('报告生成完成', 'success');\n        }, 1000);\n    }\n    \n    // 加载用户列表\n    function loadUsers() {\n        ApiClient.get('/users')\n            .then(response => {\n                if (response.success) {\n                    renderUserList(response.data);\n                } else {\n                    userList.innerHTML = '<div class=\"user-item\">加载用户失败</div>';\n                }\n            })\n            .catch(error => {\n                console.error('加载用户失败:', error);\n                userList.innerHTML = '<div class=\"user-item\">加载用户失败</div>';\n            });\n    }\n    \n    // 渲染用户列表\n    function renderUserList(users) {\n        if (users.length === 0) {\n            userList.innerHTML = '<div class=\"user-item\">暂无用户</div>';\n            return;\n        }\n        \n        userList.innerHTML = users.map(user => `\n            <div class=\"user-item\" data-user-id=\"${user.id}\" data-username=\"${user.username}\">\n                <div class=\"user-name\">${user.username}</div>\n                <div class=\"user-grade\">${user.grade}年级</div>\n            </div>\n        `).join('');\n    }\n    \n    // 检查PDF支持\n    function checkPDFSupport() {\n        ApiClient.get('/export/formats')\n            .then(response => {\n                if (response.success) {\n                    const formats = response.data;\n                    \n                    // 检查单词导出是否支持PDF\n                    const wordsPdfSupported = formats.words.some(f => f.format === 'pdf');\n                    if (!wordsPdfSupported) {\n                        const pdfBtn = wordsFormats.querySelector('[data-format=\"pdf\"]');\n                        if (pdfBtn) {\n                            pdfBtn.classList.add('disabled');\n                            pdfBtn.querySelector('.format-desc').textContent = '需要安装PDF库';\n                        }\n                    }\n                    \n                    // 检查报告导出是否支持PDF\n                    const reportPdfSupported = formats.reports.some(f => f.format === 'pdf');\n                    if (!reportPdfSupported) {\n                        const pdfBtn = reportFormats.querySelector('[data-format=\"pdf\"]');\n                        if (pdfBtn) {\n                            pdfBtn.classList.add('disabled');\n                            pdfBtn.querySelector('.format-desc').textContent = '需要安装PDF库';\n                        }\n                    }\n                }\n            })\n            .catch(error => {\n                console.error('检查导出格式失败:', error);\n            });\n    }\n    \n    // 初始化\n    loadUsers();\n    checkPDFSupport();\n});\n</script>\n{% endblock %}

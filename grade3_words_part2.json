@@ -1,0 +1,296 @@
+[
+  {
+    "word": "boy",
+    "chinese_meaning": "男孩",
+    "grade": 3,
+    "unit": 7
+  },
+  {
+    "word": "girl",
+    "chinese_meaning": "女孩",
+    "grade": 3,
+    "unit": 7
+  },
+  {
+    "word": "teacher",
+    "chinese_meaning": "教师",
+    "grade": 3,
+    "unit": 7
+  },
+  {
+    "word": "student",
+    "chinese_meaning": "学生",
+    "grade": 3,
+    "unit": 7
+  },
+  {
+    "word": "friend",
+    "chinese_meaning": "朋友",
+    "grade": 3,
+    "unit": 7
+  },
+  {
+    "word": "man",
+    "chinese_meaning": "男人",
+    "grade": 3,
+    "unit": 7
+  },
+  {
+    "word": "woman",
+    "chinese_meaning": "女人",
+    "grade": 3,
+    "unit": 7
+  },
+  {
+    "word": "father",
+    "chinese_meaning": "父亲",
+    "grade": 3,
+    "unit": 8
+  },
+  {
+    "word": "dad",
+    "chinese_meaning": "爸爸",
+    "grade": 3,
+    "unit": 8
+  },
+  {
+    "word": "mother",
+    "chinese_meaning": "母亲",
+    "grade": 3,
+    "unit": 8
+  },
+  {
+    "word": "mom",
+    "chinese_meaning": "妈妈",
+    "grade": 3,
+    "unit": 8
+  },
+  {
+    "word": "grandfather",
+    "chinese_meaning": "祖父",
+    "grade": 3,
+    "unit": 8
+  },
+  {
+    "word": "grandpa",
+    "chinese_meaning": "爷爷",
+    "grade": 3,
+    "unit": 8
+  },
+  {
+    "word": "grandmother",
+    "chinese_meaning": "祖母",
+    "grade": 3,
+    "unit": 8
+  },
+  {
+    "word": "grandma",
+    "chinese_meaning": "奶奶",
+    "grade": 3,
+    "unit": 8
+  },
+  {
+    "word": "sister",
+    "chinese_meaning": "姐妹",
+    "grade": 3,
+    "unit": 8
+  },
+  {
+    "word": "brother",
+    "chinese_meaning": "兄弟",
+    "grade": 3,
+    "unit": 8
+  },
+  {
+    "word": "eleven",
+    "chinese_meaning": "十一",
+    "grade": 3,
+    "unit": 9
+  },
+  {
+    "word": "twelve",
+    "chinese_meaning": "十二",
+    "grade": 3,
+    "unit": 9
+  },
+  {
+    "word": "thirteen",
+    "chinese_meaning": "十三",
+    "grade": 3,
+    "unit": 9
+  },
+  {
+    "word": "fourteen",
+    "chinese_meaning": "十四",
+    "grade": 3,
+    "unit": 9
+  },
+  {
+    "word": "fifteen",
+    "chinese_meaning": "十五",
+    "grade": 3,
+    "unit": 9
+  },
+  {
+    "word": "sixteen",
+    "chinese_meaning": "十六",
+    "grade": 3,
+    "unit": 9
+  },
+  {
+    "word": "seventeen",
+    "chinese_meaning": "十七",
+    "grade": 3,
+    "unit": 9
+  },
+  {
+    "word": "eighteen",
+    "chinese_meaning": "十八",
+    "grade": 3,
+    "unit": 9
+  },
+  {
+    "word": "nineteen",
+    "chinese_meaning": "十九",
+    "grade": 3,
+    "unit": 9
+  },
+  {
+    "word": "twenty",
+    "chinese_meaning": "二十",
+    "grade": 3,
+    "unit": 9
+  },
+  {
+    "word": "peach",
+    "chinese_meaning": "桃",
+    "grade": 3,
+    "unit": 10
+  },
+  {
+    "word": "pear",
+    "chinese_meaning": "梨",
+    "grade": 3,
+    "unit": 10
+  },
+  {
+    "word": "orange",
+    "chinese_meaning": "橙子",
+    "grade": 3,
+    "unit": 10
+  },
+  {
+    "word": "apple",
+    "chinese_meaning": "苹果",
+    "grade": 3,
+    "unit": 10
+  },
+  {
+    "word": "banana",
+    "chinese_meaning": "香蕉",
+    "grade": 3,
+    "unit": 10
+  },
+  {
+    "word": "grapes",
+    "chinese_meaning": "葡萄",
+    "grade": 3,
+    "unit": 10
+  },
+  {
+    "word": "watermelon",
+    "chinese_meaning": "西瓜",
+    "grade": 3,
+    "unit": 10
+  },
+  {
+    "word": "strawberry",
+    "chinese_meaning": "草莓",
+    "grade": 3,
+    "unit": 10
+  },
+  {
+    "word": "desk",
+    "chinese_meaning": "课桌",
+    "grade": 3,
+    "unit": 11
+  },
+  {
+    "word": "chair",
+    "chinese_meaning": "椅子",
+    "grade": 3,
+    "unit": 11
+  },
+  {
+    "word": "bed",
+    "chinese_meaning": "床",
+    "grade": 3,
+    "unit": 11
+  },
+  {
+    "word": "lamp",
+    "chinese_meaning": "台灯",
+    "grade": 3,
+    "unit": 11
+  },
+  {
+    "word": "home",
+    "chinese_meaning": "家",
+    "grade": 3,
+    "unit": 11
+  },
+  {
+    "word": "room",
+    "chinese_meaning": "房间",
+    "grade": 3,
+    "unit": 11
+  },
+  {
+    "word": "walkman",
+    "chinese_meaning": "随身听",
+    "grade": 3,
+    "unit": 12
+  },
+  {
+    "word": "lamp",
+    "chinese_meaning": "台灯",
+    "grade": 3,
+    "unit": 12
+  },
+  {
+    "word": "jeep",
+    "chinese_meaning": "吉普车",
+    "grade": 3,
+    "unit": 12
+  },
+  {
+    "word": "key",
+    "chinese_meaning": "钥匙",
+    "grade": 3,
+    "unit": 12
+  },
+  {
+    "word": "guess",
+    "chinese_meaning": "猜测",
+    "grade": 3,
+    "unit": 12
+  },
+  {
+    "word": "open",
+    "chinese_meaning": "打开",
+    "grade": 3,
+    "unit": 12
+  },
+  {
+    "word": "turn on",
+    "chinese_meaning": "打开",
+    "grade": 3,
+    "unit": 12
+  },
+  {
+    "word": "turn off",
+    "chinese_meaning": "关上",
+    "grade": 3,
+    "unit": 12
+  }
+]

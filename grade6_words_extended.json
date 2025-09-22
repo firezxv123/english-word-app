@@ -1,0 +1,302 @@
+[
+  {
+    "word": "meter",
+    "chinese_meaning": "米",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "ton",
+    "chinese_meaning": "吨",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "each",
+    "chinese_meaning": "各自",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "squid",
+    "chinese_meaning": "鱿鱼",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "shark",
+    "chinese_meaning": "鲨鱼",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "deep",
+    "chinese_meaning": "深的",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "seal",
+    "chinese_meaning": "海豹",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "sperm whale",
+    "chinese_meaning": "抹香鲸",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "killer whale",
+    "chinese_meaning": "虎鲸",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "even",
+    "chinese_meaning": "甚至",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "cm",
+    "chinese_meaning": "厘米",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "kg",
+    "chinese_meaning": "千克",
+    "grade": 6,
+    "unit": 13
+  },
+  {
+    "word": "lobster",
+    "chinese_meaning": "龙虾",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "know",
+    "chinese_meaning": "知道",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "might",
+    "chinese_meaning": "可以",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "medicine",
+    "chinese_meaning": "药",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "stay",
+    "chinese_meaning": "在",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "better",
+    "chinese_meaning": "更好的",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "soon",
+    "chinese_meaning": "立刻",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "trip",
+    "chinese_meaning": "旅行",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "fail",
+    "chinese_meaning": "不及格",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "test",
+    "chinese_meaning": "测试",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "pass",
+    "chinese_meaning": "通过",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "laugh",
+    "chinese_meaning": "笑",
+    "grade": 6,
+    "unit": 14
+  },
+  {
+    "word": "fly",
+    "chinese_meaning": "飞",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "into",
+    "chinese_meaning": "进入",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "own",
+    "chinese_meaning": "自己的",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "garden",
+    "chinese_meaning": "花园",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "leave",
+    "chinese_meaning": "离开",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "wake up",
+    "chinese_meaning": "醒来",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "first",
+    "chinese_meaning": "首先",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "second",
+    "chinese_meaning": "第二",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "third",
+    "chinese_meaning": "第三",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "goal",
+    "chinese_meaning": "得分",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "guess",
+    "chinese_meaning": "猜测",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "won",
+    "chinese_meaning": "获胜",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "game",
+    "chinese_meaning": "比赛",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "football",
+    "chinese_meaning": "足球",
+    "grade": 6,
+    "unit": 15
+  },
+  {
+    "word": "prepare",
+    "chinese_meaning": "准备",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "picnic",
+    "chinese_meaning": "野餐",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "cousin",
+    "chinese_meaning": "堂兄弟姐妹",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "relax",
+    "chinese_meaning": "放松",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "fun",
+    "chinese_meaning": "开心",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "until",
+    "chinese_meaning": "直到",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "miss",
+    "chinese_meaning": "想念",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "return",
+    "chinese_meaning": "回来",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "contest",
+    "chinese_meaning": "比赛",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "sports",
+    "chinese_meaning": "运动",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "between",
+    "chinese_meaning": "在......之间",
+    "grade": 6,
+    "unit": 16
+  },
+  {
+    "word": "race",
+    "chinese_meaning": "赛跑",
+    "grade": 6,
+    "unit": 16
+  }
+]

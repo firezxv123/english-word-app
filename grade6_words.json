@@ -1,0 +1,422 @@
+[
+  {
+    "word": "by",
+    "chinese_meaning": "经，乘",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "foot",
+    "chinese_meaning": "脚",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "bike",
+    "chinese_meaning": "自行车",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "bus",
+    "chinese_meaning": "公共汽车",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "train",
+    "chinese_meaning": "火车",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "how",
+    "chinese_meaning": "怎样",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "go to school",
+    "chinese_meaning": "上学",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "traffic",
+    "chinese_meaning": "交通",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "traffic light",
+    "chinese_meaning": "交通灯",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "traffic rule",
+    "chinese_meaning": "交通规则",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "stop",
+    "chinese_meaning": "停",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "wait",
+    "chinese_meaning": "等待",
+    "grade": 6,
+    "unit": 1
+  },
+  {
+    "word": "library",
+    "chinese_meaning": "图书馆",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "post office",
+    "chinese_meaning": "邮局",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "hospital",
+    "chinese_meaning": "医院",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "cinema",
+    "chinese_meaning": "电影院",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "bookstore",
+    "chinese_meaning": "书店",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "where",
+    "chinese_meaning": "在哪里",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "please",
+    "chinese_meaning": "请",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "next to",
+    "chinese_meaning": "与……相邻",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "turn",
+    "chinese_meaning": "转弯",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "right",
+    "chinese_meaning": "右边",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "left",
+    "chinese_meaning": "左边",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "straight",
+    "chinese_meaning": "成直线地",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "then",
+    "chinese_meaning": "然后",
+    "grade": 6,
+    "unit": 2
+  },
+  {
+    "word": "next week",
+    "chinese_meaning": "下周",
+    "grade": 6,
+    "unit": 3
+  },
+  {
+    "word": "this morning",
+    "chinese_meaning": "今天上午",
+    "grade": 6,
+    "unit": 3
+  },
+  {
+    "word": "this afternoon",
+    "chinese_meaning": "今天下午",
+    "grade": 6,
+    "unit": 3
+  },
+  {
+    "word": "this evening",
+    "chinese_meaning": "今天晚上",
+    "grade": 6,
+    "unit": 3
+  },
+  {
+    "word": "comic book",
+    "chinese_meaning": "漫画书",
+    "grade": 6,
+    "unit": 3
+  },
+  {
+    "word": "post card",
+    "chinese_meaning": "明信片",
+    "grade": 6,
+    "unit": 3
+  },
+  {
+    "word": "newspaper",
+    "chinese_meaning": "报纸",
+    "grade": 6,
+    "unit": 3
+  },
+  {
+    "word": "buy",
+    "chinese_meaning": "购买",
+    "grade": 6,
+    "unit": 3
+  },
+  {
+    "word": "hobby",
+    "chinese_meaning": "爱好",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "ride a bike",
+    "chinese_meaning": "骑自行车",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "dive",
+    "chinese_meaning": "跳水",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "play the violin",
+    "chinese_meaning": "拉小提琴",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "make kites",
+    "chinese_meaning": "制作风筝",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "collect stamps",
+    "chinese_meaning": "集邮",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "live",
+    "chinese_meaning": "居住",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "teach",
+    "chinese_meaning": "教",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "go",
+    "chinese_meaning": "去",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "watch",
+    "chinese_meaning": "看",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "read",
+    "chinese_meaning": "读",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "does",
+    "chinese_meaning": "助动词",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "doesn't",
+    "chinese_meaning": "不",
+    "grade": 6,
+    "unit": 4
+  },
+  {
+    "word": "singer",
+    "chinese_meaning": "歌唱家",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "writer",
+    "chinese_meaning": "作家",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "actor",
+    "chinese_meaning": "男演员",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "actress",
+    "chinese_meaning": "女演员",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "artist",
+    "chinese_meaning": "画家",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "TV reporter",
+    "chinese_meaning": "电视台记者",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "engineer",
+    "chinese_meaning": "工程师",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "accountant",
+    "chinese_meaning": "会计",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "policeman",
+    "chinese_meaning": "男警察",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "salesperson",
+    "chinese_meaning": "销售员",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "cleaner",
+    "chinese_meaning": "清洁工",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "where",
+    "chinese_meaning": "在哪里",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "work",
+    "chinese_meaning": "工作",
+    "grade": 6,
+    "unit": 5
+  },
+  {
+    "word": "rain",
+    "chinese_meaning": "雨",
+    "grade": 6,
+    "unit": 6
+  },
+  {
+    "word": "cloud",
+    "chinese_meaning": "云",
+    "grade": 6,
+    "unit": 6
+  },
+  {
+    "word": "sun",
+    "chinese_meaning": "太阳",
+    "grade": 6,
+    "unit": 6
+  },
+  {
+    "word": "stream",
+    "chinese_meaning": "河流",
+    "grade": 6,
+    "unit": 6
+  },
+  {
+    "word": "come from",
+    "chinese_meaning": "来自",
+    "grade": 6,
+    "unit": 6
+  },
+  {
+    "word": "seed",
+    "chinese_meaning": "种子",
+    "grade": 6,
+    "unit": 6
+  },
+  {
+    "word": "soil",
+    "chinese_meaning": "土壤",
+    "grade": 6,
+    "unit": 6
+  },
+  {
+    "word": "sprout",
+    "chinese_meaning": "苗",
+    "grade": 6,
+    "unit": 6
+  },
+  {
+    "word": "plant",
+    "chinese_meaning": "植物",
+    "grade": 6,
+    "unit": 6
+  },
+  {
+    "word": "should",
+    "chinese_meaning": "应该",
+    "grade": 6,
+    "unit": 6
+  },
+  {
+    "word": "then",
+    "chinese_meaning": "然后",
+    "grade": 6,
+    "unit": 6
+  }
+]

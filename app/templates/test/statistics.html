@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+
+{% block title %}测验统计 - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="test-statistics-page">
+    <div class="page-header">
+        <h1>📊 测验统计</h1>
+        <p class="text-secondary">{{ user.username }} 的测验表现分析</p>
+    </div>
+
+    {% if stats %}
+    <div class="stats-grid">
+        <!-- 最近30天统计 -->
+        <div class="stats-card">
+            <div class="card-header">
+                <h3>📅 最近30天</h3>
+            </div>
+            <div class="stats-content">
+                {% if stats.stats_30days %}
+                <div class="stat-item">
+                    <div class="stat-value">{{ stats.stats_30days.total_tests or 0 }}</div>
+                    <div class="stat-label">总测验次数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ "%.1f"|format(stats.stats_30days.avg_score or 0) }}%</div>
+                    <div class="stat-label">平均分数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ stats.stats_30days.best_score or 0 }}%</div>
+                    <div class="stat-label">最高分数</div>
+                </div>
+                {% else %}
+                <div class="no-data">暂无数据</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 最近7天统计 -->
+        <div class="stats-card">
+            <div class="card-header">
+                <h3>📊 最近7天</h3>
+            </div>
+            <div class="stats-content">
+                {% if stats.stats_7days %}
+                <div class="stat-item">
+                    <div class="stat-value">{{ stats.stats_7days.total_tests or 0 }}</div>
+                    <div class="stat-label">总测验次数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ "%.1f"|format(stats.stats_7days.avg_score or 0) }}%</div>
+                    <div class="stat-label">平均分数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ stats.stats_7days.best_score or 0 }}%</div>
+                    <div class="stat-label">最高分数</div>
+                </div>
+                {% else %}
+                <div class="no-data">暂无数据</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- 最近测验记录 -->
+    {% if stats.recent_tests and stats.recent_tests|length > 0 %}
+    <div class="recent-tests">
+        <h3>🕒 最近测验</h3>
+        <div class="tests-list">
+            {% for test in stats.recent_tests %}
+            <div class="test-item">
+                <div class="test-info">
+                    <div class="test-title">
+                        {{ test.test_type_name }}
+                        {% if test.grade and test.unit %}
+                        - {{ test.grade }}年级 第{{ test.unit }}单元
+                        {% endif %}
+                    </div>
+                    <div class="test-date">
+                        {{ test.tested_at.strftime('%m-%d %H:%M') if test.tested_at and hasattr(test.tested_at, 'strftime') else test.tested_at }}
+                    </div>
+                </div>
+                <div class="test-score {{ 'high' if test.score >= 80 else ('medium' if test.score >= 60 else 'low') }}">
+                    {{ "%.0f"|format(test.score) }}%
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 学习建议 -->
+    <div class="suggestions">
+        <h3>💡 学习建议</h3>
+        <div class="suggestion-cards">
+            {% if stats.stats_30days and stats.stats_30days.avg_score %}
+                {% set avg_score = stats.stats_30days.avg_score %}
+                {% if avg_score >= 90 %}
+                <div class="suggestion-card excellent">
+                    <div class="suggestion-icon">🎉</div>
+                    <div class="suggestion-content">
+                        <h4>表现优秀</h4>
+                        <p>你的测验成绩非常出色！继续保持，可以尝试更具挑战性的内容。</p>
+                    </div>
+                </div>
+                {% elif avg_score >= 75 %}
+                <div class="suggestion-card good">
+                    <div class="suggestion-icon">👍</div>
+                    <div class="suggestion-content">
+                        <h4>表现良好</h4>
+                        <p>你的成绩不错！建议多做一些测验来巩固薄弱环节。</p>
+                    </div>
+                </div>
+                {% elif avg_score >= 60 %}
+                <div class="suggestion-card average">
+                    <div class="suggestion-icon">📚</div>
+                    <div class="suggestion-content">
+                        <h4>需要加强</h4>
+                        <p>建议增加学习时间，多复习错题，提高单词掌握程度。</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="suggestion-card needs-work">
+                    <div class="suggestion-icon">💪</div>
+                    <div class="suggestion-content">
+                        <h4>努力提升</h4>
+                        <p>不要气馁！建议从基础开始，逐步提高单词量和理解能力。</p>
+                    </div>
+                </div>
+                {% endif %}
+            {% else %}
+            <div class="suggestion-card">
+                <div class="suggestion-icon">🚀</div>
+                <div class="suggestion-content">
+                    <h4>开始测验</h4>
+                    <p>还没有足够的测验数据。建议完成几次测验来了解学习情况。</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">📊</div>
+        <h3>还没有统计数据</h3>
+        <p class="text-secondary">完成一些测验后就能看到详细的统计分析了</p>
+        <a href="{{ url_for('main.create_test', user_id=user.id) }}" class="btn btn-primary">
+            📝 开始测验
+        </a>
+    </div>
+    {% endif %}
+
+    <div class="actions">
+        <a href="{{ url_for('main.test_page', user_id=user.id) }}" class="btn btn-primary">
+            返回测验首页
+        </a>
+        <a href="{{ url_for('main.test_history', user_id=user.id) }}" class="btn btn-outline">
+            查看测验历史
+        </a>
+    </div>
+</div>
+
+<style>
+.test-statistics-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xxl);
+}
+
+.stats-card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+}
+
+.card-header {
+    background: var(--primary-light);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header h3 {
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.stats-content {
+    padding: var(--spacing-lg);
+    display: flex;
+    justify-content: space-around;
+    gap: var(--spacing-md);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.no-data {
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+    width: 100%;
+}
+
+.recent-tests {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.recent-tests h3 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+}
+
+.tests-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.test-item {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.test-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+}
+
+.test-date {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.test-score {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--border-radius);
+}
+
+.test-score.high {
+    background: var(--success-light);
+    color: var(--success-color);
+}
+
+.test-score.medium {
+    background: var(--warning-light);
+    color: var(--warning-color);
+}
+
+.test-score.low {
+    background: var(--danger-light);
+    color: var(--danger-color);
+}
+
+.suggestions {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.suggestions h3 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+}
+
+.suggestion-cards {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.suggestion-card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+}
+
+.suggestion-card.excellent {
+    border-color: var(--success-color);
+    background: var(--success-light);
+}
+
+.suggestion-card.good {
+    border-color: var(--primary-color);
+    background: var(--primary-light);
+}
+
+.suggestion-card.average {
+    border-color: var(--warning-color);
+    background: var(--warning-light);
+}
+
+.suggestion-card.needs-work {
+    border-color: var(--danger-color);
+    background: var(--danger-light);
+}
+
+.suggestion-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.suggestion-content h4 {
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--text-primary);
+}
+
+.suggestion-content p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xxl);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+    .stats-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .actions {
+        flex-direction: column;
+    }
+    
+    .test-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+}
+</style>
+{% endblock %}

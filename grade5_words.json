@@ -1,0 +1,512 @@
+[
+  {
+    "word": "young",
+    "chinese_meaning": "年轻的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "funny",
+    "chinese_meaning": "滑稽可笑的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "tall",
+    "chinese_meaning": "高的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "strong",
+    "chinese_meaning": "强壮的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "kind",
+    "chinese_meaning": "和蔼的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "old",
+    "chinese_meaning": "年老的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "short",
+    "chinese_meaning": "矮的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "thin",
+    "chinese_meaning": "瘦的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "Mr",
+    "chinese_meaning": "先生",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "like",
+    "chinese_meaning": "像",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "strict",
+    "chinese_meaning": "严格的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "smart",
+    "chinese_meaning": "聪明的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "active",
+    "chinese_meaning": "积极的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "quiet",
+    "chinese_meaning": "安静的",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "very",
+    "chinese_meaning": "很",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "but",
+    "chinese_meaning": "但是",
+    "grade": 5,
+    "unit": 1
+  },
+  {
+    "word": "Mondy",
+    "chinese_meaning": "星期一",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "Tuesday",
+    "chinese_meaning": "星期二",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "Wednesday",
+    "chinese_meaning": "星期三",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "Thursday",
+    "chinese_meaning": "星期四",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "Friday",
+    "chinese_meaning": "星期五",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "Saturday",
+    "chinese_meaning": "星期六",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "Sunday",
+    "chinese_meaning": "星期日",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "day",
+    "chinese_meaning": "天",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "have",
+    "chinese_meaning": "有",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "on",
+    "chinese_meaning": "在……时候",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "do homework",
+    "chinese_meaning": "做作业",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "watch TV",
+    "chinese_meaning": "看电视",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "read books",
+    "chinese_meaning": "读书",
+    "grade": 5,
+    "unit": 2
+  },
+  {
+    "word": "eggplant",
+    "chinese_meaning": "茄子",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "fish",
+    "chinese_meaning": "鱼",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "green beans",
+    "chinese_meaning": "青豆",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "tofu",
+    "chinese_meaning": "豆腐",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "potato",
+    "chinese_meaning": "土豆",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "tomato",
+    "chinese_meaning": "西红柿",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "for",
+    "chinese_meaning": "为",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "lunch",
+    "chinese_meaning": "中餐",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "we",
+    "chinese_meaning": "我们",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "tasty",
+    "chinese_meaning": "好吃的",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "sweet",
+    "chinese_meaning": "甜的",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "sour",
+    "chinese_meaning": "酸的",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "fresh",
+    "chinese_meaning": "新鲜的",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "salty",
+    "chinese_meaning": "咸的",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "favourite",
+    "chinese_meaning": "最喜欢的",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "they are",
+    "chinese_meaning": "他们是",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "fruit",
+    "chinese_meaning": "水果",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "grape",
+    "chinese_meaning": "葡萄",
+    "grade": 5,
+    "unit": 3
+  },
+  {
+    "word": "cook the meals",
+    "chinese_meaning": "做饭",
+    "grade": 5,
+    "unit": 4
+  },
+  {
+    "word": "water the flowers",
+    "chinese_meaning": "浇花",
+    "grade": 5,
+    "unit": 4
+  },
+  {
+    "word": "sweep the floor",
+    "chinese_meaning": "扫地",
+    "grade": 5,
+    "unit": 4
+  },
+  {
+    "word": "clean the bedroom",
+    "chinese_meaning": "打扫卧室",
+    "grade": 5,
+    "unit": 4
+  },
+  {
+    "word": "make the bed",
+    "chinese_meaning": "铺床",
+    "grade": 5,
+    "unit": 4
+  },
+  {
+    "word": "set the table",
+    "chinese_meaning": "摆饭桌",
+    "grade": 5,
+    "unit": 4
+  },
+  {
+    "word": "wash the clothes",
+    "chinese_meaning": "洗衣服",
+    "grade": 5,
+    "unit": 4
+  },
+  {
+    "word": "do the dishes",
+    "chinese_meaning": "洗碗碟",
+    "grade": 5,
+    "unit": 4
+  },
+  {
+    "word": "use a computer",
+    "chinese_meaning": "使用计算机",
+    "grade": 5,
+    "unit": 4
+  },
+  {
+    "word": "curtain",
+    "chinese_meaning": "窗帘",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "trash bin",
+    "chinese_meaning": "垃圾箱",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "closet",
+    "chinese_meaning": "壁橱",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "mirror",
+    "chinese_meaning": "镜子",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "end table",
+    "chinese_meaning": "床头柜",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "bedroom",
+    "chinese_meaning": "卧室",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "kitchen",
+    "chinese_meaning": "厨房",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "bathroom",
+    "chinese_meaning": "卫生间",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "living room",
+    "chinese_meaning": "客厅",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "in",
+    "chinese_meaning": "在……里面",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "on",
+    "chinese_meaning": "在……上面",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "under",
+    "chinese_meaning": "在……下面",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "near",
+    "chinese_meaning": "在……旁边",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "behind",
+    "chinese_meaning": "在……后边",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "clothes",
+    "chinese_meaning": "衣服",
+    "grade": 5,
+    "unit": 5
+  },
+  {
+    "word": "river",
+    "chinese_meaning": "河流",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "flower",
+    "chinese_meaning": "花",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "grass",
+    "chinese_meaning": "草",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "lake",
+    "chinese_meaning": "湖泊",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "forest",
+    "chinese_meaning": "森林",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "path",
+    "chinese_meaning": "路",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "park",
+    "chinese_meaning": "公园",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "picture",
+    "chinese_meaning": "照片",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "house",
+    "chinese_meaning": "房子",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "bridge",
+    "chinese_meaning": "桥",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "tree",
+    "chinese_meaning": "树",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "road",
+    "chinese_meaning": "公路",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "building",
+    "chinese_meaning": "建筑物",
+    "grade": 5,
+    "unit": 6
+  },
+  {
+    "word": "clean",
+    "chinese_meaning": "干净的",
+    "grade": 5,
+    "unit": 6
+  }
+]

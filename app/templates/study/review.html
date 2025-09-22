@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+
+{% block title %}智能复习 - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="review-section">
+        <div class="section-header">
+            <h1>🧠 智能复习</h1>
+            <p class="section-description">复习需要加强记忆的单词</p>
+        </div>
+
+        {% if review_words %}
+        <div class="review-info">
+            <div class="info-card">
+                <div class="info-icon">📚</div>
+                <div class="info-content">
+                    <div class="info-title">待复习单词</div>
+                    <div class="info-value">{{ review_words|length }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="review-words">
+            <div class="words-grid">
+                {% for word in review_words %}
+                <div class="review-word-card">
+                    <div class="word-header">
+                        <span class="word-english">{{ word.word }}</span>
+                        <button class="audio-btn" onclick="playAudio('{{ word.word }}')">🔊</button>
+                    </div>
+                    
+                    <div class="word-phonetic">{{ word.phonetic }}</div>
+                    <div class="word-meaning">{{ word.chinese_meaning }}</div>
+                    
+                    {% if word.phonics_breakdown %}
+                    <div class="word-phonics">
+                        <strong>拼读：</strong>{{ word.phonics_breakdown }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if word.memory_method %}
+                    <div class="word-memory">
+                        <strong>记忆：</strong>{{ word.memory_method }}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="word-actions">
+                        <button class="btn btn-sm btn-success" onclick="markMastered({{ word.id }})">
+                            ✅ 已掌握
+                        </button>
+                        <button class="btn btn-sm btn-warning" onclick="markDifficult({{ word.id }})">
+                            ⚠️ 还需练习
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="review-actions">
+            <button class="btn btn-primary btn-lg" onclick="startQuickReview()">
+                🚀 开始快速复习
+            </button>
+            <a href="{{ url_for('main.study_page', user_id=user.id) }}" class="btn btn-secondary">
+                返回学习中心
+            </a>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">🎉</div>
+            <h3>太棒了！</h3>
+            <p>目前没有需要复习的单词</p>
+            <p>继续学习新单词或进行测验吧！</p>
+            
+            <div class="empty-actions">
+                <a href="{{ url_for('main.study_page', user_id=user.id) }}" class="btn btn-primary">
+                    继续学习
+                </a>
+                <a href="{{ url_for('main.test_page', user_id=user.id) }}" class="btn btn-secondary">
+                    进行测验
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+</div>
+
+<style>
+.review-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+}
+
+.section-header h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.section-description {
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+}
+
+.review-info {
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+.info-card {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    background: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-base);
+    border: 1px solid var(--border-light);
+}
+
+.info-icon {
+    font-size: 2rem;
+}
+
+.info-title {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.info-value {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+.words-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xxl);
+}
+
+.review-word-card {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-base);
+    border: 1px solid var(--border-light);
+    transition: transform var(--transition-base);
+}
+
+.review-word-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.word-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+}
+
+.word-english {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.audio-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--transition-fast);
+}
+
+.audio-btn:hover {
+    opacity: 1;
+}
+
+.word-phonetic {
+    font-style: italic;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+.word-meaning {
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.word-phonics,
+.word-memory {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+    line-height: var(--line-height-relaxed);
+}
+
+.word-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.review-actions {
+    display: flex;
+    gap: var(--spacing-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xxl);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.empty-state h3 {
+    font-size: var(--font-size-2xl);
+    color: var(--success-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.empty-actions {
+    margin-top: var(--spacing-xl);
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .words-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .word-actions {
+        flex-direction: column;
+    }
+    
+    .review-actions,
+    .empty-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .info-card {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+function playAudio(word) {
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        speechSynthesis.speak(utterance);
+    }
+}
+
+async function markMastered(wordId) {
+    try {
+        await ApiClient.study.recordProgress({{ user.id }}, wordId, 5);
+        WordApp.showAlert('已标记为掌握！', 'success');
+        
+        // 移除卡片
+        event.target.closest('.review-word-card').style.opacity = '0.5';
+        event.target.closest('.review-word-card').style.transform = 'scale(0.95)';
+    } catch (error) {
+        WordApp.showAlert('操作失败，请重试', 'error');
+    }
+}
+
+async function markDifficult(wordId) {
+    try {
+        await ApiClient.study.recordProgress({{ user.id }}, wordId, 2);
+        WordApp.showAlert('已标记需要练习', 'info');
+        
+        // 标记卡片
+        event.target.closest('.review-word-card').style.border = '2px solid var(--warning-color)';
+    } catch (error) {
+        WordApp.showAlert('操作失败，请重试', 'error');
+    }
+}
+
+function startQuickReview() {
+    // 开始快速复习模式
+    window.location.href = `{{ url_for('main.start_study', user_id=user.id) }}?mode=review`;
+}
+</script>
+{% endblock %}

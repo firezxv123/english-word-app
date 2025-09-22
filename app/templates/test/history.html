@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}测验历史 - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="test-history-page">
+    <div class="page-header">
+        <div class="header-content">
+            <div class="header-text">
+                <h1>📊 测验历史</h1>
+                <p class="text-secondary">{{ user.username }} 的测验记录</p>
+            </div>
+            <div class="header-actions">
+                <a href="{{ url_for('main.test_page', user_id=user.id) }}" class="btn btn-primary">
+                    📝 新建测验
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% if history and history|length > 0 %}
+    <div class="history-list">
+        {% for record in history %}
+        <div class="history-item">
+            <div class="test-info">
+                <div class="test-header">
+                    <h3 class="test-title">
+                        {{ record.test_type_name }}
+                        {% if record.grade and record.unit %}
+                        - {{ record.grade }}年级 第{{ record.unit }}单元
+                        {% endif %}
+                    </h3>
+                    <div class="test-meta">
+                        <span class="test-date">{{ record.tested_at.strftime('%Y-%m-%d %H:%M') if record.tested_at and hasattr(record.tested_at, 'strftime') else record.tested_at }}</span>
+                        <span class="test-duration">⏱️ {{ record.test_duration }}秒</span>
+                    </div>
+                </div>
+                
+                <div class="test-results">
+                    <div class="score-display">
+                        <div class="score-circle {{ 'high' if record.score >= 80 else ('medium' if record.score >= 60 else 'low') }}">
+                            {{ "%.0f"|format(record.score) }}%
+                        </div>
+                        <div class="score-details">
+                            <div class="correct-answers">
+                                ✅ 正确: {{ record.correct_answers }}/{{ record.total_questions }}
+                            </div>
+                            <div class="wrong-answers">
+                                ❌ 错误: {{ record.total_questions - record.correct_answers }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="test-actions">
+                {% if record.wrong_word_ids and record.wrong_word_ids|length > 0 %}
+                <a href="{{ url_for('main.retry_test', user_id=user.id, original_test_id=record.id) }}" 
+                   class="btn btn-sm btn-warning">
+                    🔄 重测错题
+                </a>
+                {% endif %}
+                <a href="{{ url_for('main.test_result', test_id=record.id) }}" 
+                   class="btn btn-sm btn-outline">
+                    📋 查看详情
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">📊</div>
+        <h3>还没有测验记录</h3>
+        <p class="text-secondary">开始第一次测验吧！</p>
+        <a href="{{ url_for('main.create_test', user_id=user.id) }}" class="btn btn-primary">
+            📝 创建测验
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.test-history-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.page-header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.history-item {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.test-info {
+    flex: 1;
+}
+
+.test-header {
+    margin-bottom: var(--spacing-md);
+}
+
+.test-title {
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--text-primary);
+}
+
+.test-meta {
+    display: flex;
+    gap: var(--spacing-md);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.test-results {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.score-display {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.score-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.score-circle.high {
+    background: var(--success-color);
+}
+
+.score-circle.medium {
+    background: var(--warning-color);
+}
+
+.score-circle.low {
+    background: var(--danger-color);
+}
+
+.score-details {
+    font-size: var(--font-size-sm);
+}
+
+.test-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-direction: column;
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xxl);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .history-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .test-actions {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+</style>
+{% endblock %}

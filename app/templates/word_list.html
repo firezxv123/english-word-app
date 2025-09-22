@@ -1,0 +1,407 @@
+{% extends "base.html" %}
+
+{% block title %}词库浏览 - 小学英语单词复习应用{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/word-list.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="word-list-header">
+        <h1>📚 词库浏览</h1>
+        <p class="page-description">浏览和管理小学英语单词库</p>
+    </section>
+
+    <!-- 筛选器 -->
+    <section class="filter-section">
+        <div class="filter-card">
+            <h3 class="filter-title">🔍 筛选条件</h3>
+            
+            <form id="filterForm" class="filter-form">
+                <div class="filter-row">
+                    <div class="form-group">
+                        <label for="gradeSelect" class="form-label">年级：</label>
+                        <select id="gradeSelect" name="grade" class="form-select">
+                            <option value="">所有年级</option>
+                            {% for grade in grades %}
+                            <option value="{{ grade }}" {% if grade == selected_grade %}selected{% endif %}>
+                                {{ grade }}年级
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="unitSelect" class="form-label">单元：</label>
+                        <select id="unitSelect" name="unit" class="form-select">
+                            <option value="">所有单元</option>
+                            {% for unit in units %}
+                            <option value="{{ unit }}" {% if unit == selected_unit %}selected{% endif %}>
+                                第{{ unit }}单元
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            🔍 筛选
+                        </button>
+                        <button type="button" id="resetFilter" class="btn btn-secondary">
+                            🔄 重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- 词库统计 -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ words|length }}</div>
+                    <div class="stat-label">当前显示单词</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ grades|length }}</div>
+                    <div class="stat-label">年级数量</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">📖</div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ units|length }}</div>
+                    <div class="stat-label">单元数量</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-content">
+                    <div class="stat-value">PEP</div>
+                    <div class="stat-label">教材版本</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 单词列表 -->
+    <section class="word-list-section">
+        {% if words %}
+        <div class="word-list-controls">
+            <div class="list-info">
+                <span class="word-count">共 {{ words|length }} 个单词</span>
+            </div>
+            <div class="list-actions">
+                <button id="exportBtn" class="btn btn-outline-primary">
+                    📤 导出
+                </button>
+                <button id="printBtn" class="btn btn-outline-secondary">
+                    🖨️ 打印
+                </button>
+            </div>
+        </div>
+
+        <div class="word-grid" id="wordGrid">
+            {% for word in words %}
+            <div class="word-card" data-word-id="{{ word.id }}">
+                <div class="word-header">
+                    <h3 class="word-english">{{ word.word }}</h3>
+                    <span class="word-phonetic">{{ word.phonetic or '' }}</span>
+                </div>
+                
+                <div class="word-content">
+                    <div class="word-meaning">
+                        <strong>{{ word.chinese_meaning }}</strong>
+                    </div>
+                    
+                    {% if word.phonics_breakdown %}
+                    <div class="word-phonics">
+                        <span class="label">拼读：</span>
+                        <span class="content">{{ word.phonics_breakdown }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if word.memory_method %}
+                    <div class="word-memory">
+                        <span class="label">记忆：</span>
+                        <span class="content">{{ word.memory_method }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="word-footer">
+                    <div class="word-info">
+                        <span class="grade-badge">{{ word.grade }}年级</span>
+                        <span class="unit-badge">第{{ word.unit }}单元</span>
+                    </div>
+                    
+                    <div class="word-actions">
+                        <button class="btn-icon play-audio" data-word-id="{{ word.id }}" {% if word.audio_url %}data-audio="{{ word.audio_url }}"{% endif %} title="播放发音">
+                            🔊
+                        </button>
+                        <button class="btn-icon view-detail" data-word-id="{{ word.id }}" title="查看详情">
+                            👁️
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- 分页控制 -->
+        <div class="pagination-container">
+            <div class="pagination">
+                <button class="btn btn-outline-primary" id="prevPage" disabled>
+                    ← 上一页
+                </button>
+                <span class="page-info">
+                    第 <span id="currentPage">1</span> 页，共 <span id="totalPages">1</span> 页
+                </span>
+                <button class="btn btn-outline-primary" id="nextPage" disabled>
+                    下一页 →
+                </button>
+            </div>
+        </div>
+        
+        {% else %}
+        <!-- 空状态 -->
+        <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <h3 class="empty-title">暂无单词数据</h3>
+            <p class="empty-description">
+                {% if selected_grade or selected_unit %}
+                当前筛选条件下没有找到单词，请尝试调整筛选条件。
+                {% else %}
+                词库中暂无单词数据，请先导入单词。
+                {% endif %}
+            </p>
+            <div class="empty-actions">
+                {% if selected_grade or selected_unit %}
+                <button id="clearFilter" class="btn btn-primary">
+                    🔄 清除筛选
+                </button>
+                {% endif %}
+                <a href="{{ url_for('main.index') }}" class="btn btn-secondary">
+                    🏠 返回首页
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+</div>
+
+<!-- 单词详情模态框 -->
+<div id="wordDetailModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">单词详情</h3>
+            <button class="modal-close" id="closeModal">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- 动态加载单词详情 -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 筛选表单
+    const filterForm = document.getElementById('filterForm');
+    const gradeSelect = document.getElementById('gradeSelect');
+    const unitSelect = document.getElementById('unitSelect');
+    const resetFilter = document.getElementById('resetFilter');
+    
+    // 年级变化时更新单元选项
+    gradeSelect.addEventListener('change', function() {
+        const selectedGrade = this.value;
+        updateUnitOptions(selectedGrade);
+    });
+    
+    // 筛选表单提交
+    filterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        applyFilter();
+    });
+    
+    // 重置筛选
+    resetFilter.addEventListener('click', function() {
+        gradeSelect.value = '';
+        unitSelect.value = '';
+        updateUnitOptions('');
+        applyFilter();
+    });
+    
+    // 清除筛选（空状态下的按钮）
+    const clearFilter = document.getElementById('clearFilter');
+    if (clearFilter) {
+        clearFilter.addEventListener('click', function() {
+            window.location.href = '{{ url_for("main.word_list") }}';
+        });
+    }
+    
+    // 查看单词详情
+    document.querySelectorAll('.view-detail').forEach(button => {
+        button.addEventListener('click', function() {
+            const wordId = this.dataset.wordId;
+            showWordDetail(wordId);
+        });
+    });
+    
+    // 模态框控制
+    const modal = document.getElementById('wordDetailModal');
+    const closeModal = document.getElementById('closeModal');
+    
+    closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+    
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    
+    // 导出功能
+    const exportBtn = document.getElementById('exportBtn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', function() {
+            exportWords();
+        });
+    }
+    
+    // 打印功能
+    const printBtn = document.getElementById('printBtn');
+    if (printBtn) {
+        printBtn.addEventListener('click', function() {
+            printWordList();
+        });
+    }
+    
+    // 函数定义
+    function updateUnitOptions(grade) {
+        if (!grade) {
+            unitSelect.innerHTML = '<option value="">所有单元</option>';
+            return;
+        }
+        
+        // 获取指定年级的单元
+        ApiClient.words.getGradeUnits(grade)
+            .then(response => {
+                if (response.success) {
+                    let options = '<option value="">所有单元</option>';
+                    response.data.forEach(unit => {
+                        options += `<option value="${unit}">第${unit}单元</option>`;
+                    });
+                    unitSelect.innerHTML = options;
+                }
+            })
+            .catch(error => {
+                console.error('获取单元列表失败:', error);
+            });
+    }
+    
+    function applyFilter() {
+        const grade = gradeSelect.value;
+        const unit = unitSelect.value;
+        
+        const params = new URLSearchParams();
+        if (grade) params.append('grade', grade);
+        if (unit) params.append('unit', unit);
+        
+        window.location.href = `{{ url_for("main.word_list") }}?${params.toString()}`;
+    }
+    
+    function showWordDetail(wordId) {
+        const modal = document.getElementById('wordDetailModal');
+        const modalBody = document.getElementById('modalBody');
+        
+        modalBody.innerHTML = '<div class="loading">加载中...</div>';
+        modal.style.display = 'block';
+        
+        ApiClient.words.getWord(wordId)
+            .then(response => {
+                if (response.success) {
+                    const word = response.data;
+                    modalBody.innerHTML = `
+                        <div class="word-detail">
+                            <div class="detail-section">
+                                <h4>${word.word}</h4>
+                                <p class="phonetic">${word.phonetic || ''}</p>
+                                <p class="meaning"><strong>${word.chinese_meaning}</strong></p>
+                            </div>
+                            
+                            ${word.phonics_breakdown ? `
+                            <div class="detail-section">
+                                <h5>自然拼读</h5>
+                                <p>${word.phonics_breakdown}</p>
+                            </div>
+                            ` : ''}
+                            
+                            ${word.memory_method ? `
+                            <div class="detail-section">
+                                <h5>记忆方法</h5>
+                                <p>${word.memory_method}</p>
+                            </div>
+                            ` : ''}
+                            
+                            <div class="detail-section">
+                                <h5>基本信息</h5>
+                                <p>年级：${word.grade}年级</p>
+                                <p>单元：第${word.unit}单元</p>
+                                <p>教材版本：${word.book_version}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    modalBody.innerHTML = '<div class="error">加载失败</div>';
+                }
+            })
+            .catch(error => {
+                console.error('获取单词详情失败:', error);
+                modalBody.innerHTML = '<div class="error">加载失败</div>';
+            });
+    }
+    
+    function exportWords() {
+        const grade = '{{ selected_grade or "" }}';
+        const unit = '{{ selected_unit or "" }}';
+        
+        ApiClient.words.export('json', grade, unit)
+            .then(response => {
+                if (response.success) {
+                    const blob = new Blob([JSON.stringify(response.data, null, 2)], {
+                        type: 'application/json'
+                    });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `words_${grade || 'all'}_${unit || 'all'}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    WordApp.showAlert('导出成功', 'success');
+                }
+            })
+            .catch(error => {
+                console.error('导出失败:', error);
+                WordApp.showAlert('导出失败', 'error');
+            });
+    }
+    
+    function printWordList() {
+        window.print();
+    }
+});
+</script>
+{% endblock %}

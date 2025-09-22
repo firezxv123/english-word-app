@@ -1,0 +1,382 @@
+{% extends "base.html" %}
+
+{% block title %}测验结果{% endblock %}
+
+{% block content %}
+<div class="test-result-page">
+    <div class="result-header">
+        <div class="score-display">
+            <div class="score-circle {{ 'excellent' if result.score >= 90 else ('good' if result.score >= 75 else ('average' if result.score >= 60 else 'poor')) }}">
+                <div class="score-value">{{ "%.0f"|format(result.score) }}</div>
+                <div class="score-unit">分</div>
+            </div>
+        </div>
+        <div class="result-info">
+            <h1>🎯 测验完成！</h1>
+            <div class="result-stats">
+                <div class="stat-item">
+                    <span class="stat-value">{{ result.correct_answers }}</span>
+                    <span class="stat-label">正确</span>
+                </div>
+                <div class="stat-divider">/</div>
+                <div class="stat-item">
+                    <span class="stat-value">{{ result.total_questions }}</span>
+                    <span class="stat-label">总题数</span>
+                </div>
+            </div>
+            <div class="test-meta">
+                <span>📝 {{ result.test_type_name }}</span>
+                {% if result.grade and result.unit %}
+                <span>📚 {{ result.grade }}年级 第{{ result.unit }}单元</span>
+                {% endif %}
+                <span>⏱️ 用时 {{ result.test_duration }}秒</span>
+            </div>
+        </div>
+    </div>
+
+    {% if result.wrong_words and result.wrong_words|length > 0 %}
+    <div class="wrong-words-section">
+        <div class="section-header">
+            <h3>❌ 错题回顾 ({{ result.wrong_words|length }}题)</h3>
+            <p class="text-secondary">复习这些单词，下次会更好！</p>
+        </div>
+        
+        <div class="wrong-words-grid">
+            {% for word in result.wrong_words %}
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word-english">{{ word.word }}</div>
+                    {% if word.phonetic %}
+                    <div class="word-phonetic">{{ word.phonetic }}</div>
+                    {% endif %}
+                </div>
+                <div class="word-chinese">{{ word.chinese_meaning }}</div>
+                {% if word.memory_method %}
+                <div class="word-memory">
+                    <small>💡 记忆方法：{{ word.memory_method }}</small>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="retry-section">
+            <a href="{{ url_for('main.retry_test', user_id=user.id, original_test_id=result.id) }}" 
+               class="btn btn-warning btn-lg">
+                🔄 重测错题
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <div class="perfect-score">
+        <div class="perfect-icon">🎉</div>
+        <h3>完美答卷！</h3>
+        <p>恭喜你全部答对，继续保持！</p>
+    </div>
+    {% endif %}
+
+    <div class="performance-analysis">
+        <h3>📊 表现分析</h3>
+        <div class="analysis-cards">
+            <div class="analysis-card">
+                <div class="card-icon">🎯</div>
+                <div class="card-content">
+                    <h4>准确率</h4>
+                    <p>{{ "%.1f"|format((result.correct_answers / result.total_questions) * 100) }}%</p>
+                </div>
+            </div>
+            <div class="analysis-card">
+                <div class="card-icon">⚡</div>
+                <div class="card-content">
+                    <h4>平均用时</h4>
+                    <p>{{ "%.1f"|format(result.test_duration / result.total_questions) }} 秒/题</p>
+                </div>
+            </div>
+            <div class="analysis-card">
+                <div class="card-icon">📈</div>
+                <div class="card-content">
+                    <h4>成绩等级</h4>
+                    <p>
+                        {% if result.score >= 90 %}优秀
+                        {% elif result.score >= 75 %}良好
+                        {% elif result.score >= 60 %}及格
+                        {% else %}需要努力
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ url_for('main.create_test', user_id=user.id) }}" class="btn btn-primary">
+            📝 再来一次
+        </a>
+        <a href="{{ url_for('main.test_history', user_id=user.id) }}" class="btn btn-outline">
+            📊 查看历史
+        </a>
+        <a href="{{ url_for('main.study_page', user_id=user.id) }}" class="btn btn-secondary">
+            📚 继续学习
+        </a>
+    </div>
+</div>
+
+<style>
+.test-result-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xxl);
+    margin-bottom: var(--spacing-xxl);
+    padding: var(--spacing-xxl);
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--success-light) 100%);
+    border-radius: var(--border-radius-lg);
+}
+
+.score-display {
+    flex-shrink: 0;
+}
+
+.score-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+}
+
+.score-circle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    opacity: 0.9;
+}
+
+.score-circle.excellent::before {
+    background: linear-gradient(135deg, var(--success-color) 0%, #28a745 100%);
+}
+
+.score-circle.good::before {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
+}
+
+.score-circle.average::before {
+    background: linear-gradient(135deg, var(--warning-color) 0%, #e0a800 100%);
+}
+
+.score-circle.poor::before {
+    background: linear-gradient(135deg, var(--danger-color) 0%, #c82333 100%);
+}
+
+.score-value {
+    font-size: 2.5rem;
+    z-index: 1;
+}
+
+.score-unit {
+    font-size: 1rem;
+    z-index: 1;
+}
+
+.result-info h1 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+}
+
+.result-stats {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.stat-divider {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.test-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.wrong-words-section {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.section-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.section-header h3 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.wrong-words-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.word-card {
+    background: var(--white);
+    border: 1px solid var(--danger-light);
+    border-left: 4px solid var(--danger-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+}
+
+.word-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-md);
+}
+
+.word-english {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.word-phonetic {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.word-chinese {
+    font-size: var(--font-size-md);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.word-memory {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.retry-section {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--warning-light);
+    border-radius: var(--border-radius);
+}
+
+.perfect-score {
+    text-align: center;
+    padding: var(--spacing-xxl);
+    background: var(--success-light);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-xxl);
+}
+
+.perfect-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.performance-analysis {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.performance-analysis h3 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+}
+
+.analysis-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.analysis-card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    text-align: center;
+}
+
+.card-icon {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.card-content h4 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.card-content p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.action-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .result-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .wrong-words-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .test-meta {
+        justify-content: center;
+    }
+}
+</style>
+{% endblock %}

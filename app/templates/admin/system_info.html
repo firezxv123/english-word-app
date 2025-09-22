@@ -1,0 +1,345 @@
+{% extends "base.html" %}
+
+{% block title %}系统信息 - 小学英语单词复习应用{% endblock %}
+
+{% block extra_css %}
+<style>
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-xl) 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    border-radius: var(--border-radius-lg);
+}
+
+.admin-header h1 {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-xxl);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.info-card {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.info-card h3 {
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--primary-color);
+    font-size: var(--font-size-lg);
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+}
+
+.info-value {
+    color: var(--text-secondary);
+    text-align: right;
+    word-break: break-all;
+    max-width: 60%;
+}
+
+.admin-actions {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    margin-top: var(--spacing-lg);
+}
+
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.error-message {
+    background: var(--danger-light);
+    color: var(--danger-color);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-lg);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <section class="admin-header">
+        <h1>⚙️ 系统信息</h1>
+        <p>查看应用系统状态和配置信息</p>
+    </section>
+
+    {% if error %}
+    <div class="error-message">
+        <strong>错误：</strong>{{ error }}
+    </div>
+    {% endif %}
+
+    <div class="info-grid">
+        <!-- 应用信息 -->
+        <div class="info-card">
+            <h3>📱 应用信息</h3>
+            <div class="info-item">
+                <span class="info-label">应用名称</span>
+                <span class="info-value">小学英语单词复习应用</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">版本</span>
+                <span class="info-value">v1.0.0</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">启动时间</span>
+                <span class="info-value">{{ system_info.get('start_time', '未知') }}</span>
+            </div>
+        </div>
+
+        <!-- 系统信息 -->
+        <div class="info-card">
+            <h3>🖥️ 系统信息</h3>
+            <div class="info-item">
+                <span class="info-label">操作系统</span>
+                <span class="info-value">{{ system_info.get('platform', '未知') }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Python版本</span>
+                <span class="info-value">{{ system_info.get('python_version', '未知').split()[0] if system_info.get('python_version') else '未知' }}</span>
+            </div>
+        </div>
+
+        <!-- 数据库信息 -->
+        <div class="info-card">
+            <h3>🗄️ 数据库信息</h3>
+            <div class="info-item">
+                <span class="info-label">单词总数</span>
+                <span class="info-value">{{ system_info.get('word_count', 0) }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">用户总数</span>
+                <span class="info-value">{{ system_info.get('user_count', 0) }}</span>
+            </div>
+        </div>
+
+        <!-- 缓存信息 -->
+        <div class="info-card">
+            <h3>💾 缓存信息</h3>
+            <div class="info-item">
+                <span class="info-label">缓存项目数</span>
+                <span class="info-value" id="cacheItemCount">-</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">内存使用量</span>
+                <span class="info-value" id="cacheMemoryUsage">-</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">缓存命中率</span>
+                <span class="info-value" id="cacheHitRate">-</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理操作 -->
+    <section class="admin-actions">
+        <h3>🔧 管理操作</h3>
+        <div class="action-grid">
+            <a href="{{ url_for('main.admin_logs') }}" class="btn btn-primary">
+                🔍 查看日志
+            </a>
+            <a href="{{ url_for('main.word_list') }}" class="btn btn-secondary">
+                📚 词库管理
+            </a>
+            <button id="batchGenerateAudio" class="btn btn-info">
+                🔊 批量生成音频
+            </button>
+            <button id="validateAudio" class="btn btn-warning">
+                ✅ 验证音频文件
+            </button>
+            <button id="warmupCache" class="btn btn-success">
+                🔥 缓存预热
+            </button>
+            <button id="clearCache" class="btn btn-danger">
+                🗑️ 清除缓存
+            </button>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const batchGenerateAudioBtn = document.getElementById('batchGenerateAudio');
+    const validateAudioBtn = document.getElementById('validateAudio');
+    const warmupCacheBtn = document.getElementById('warmupCache');
+    const clearCacheBtn = document.getElementById('clearCache');
+    
+    // 加载缓存统计信息
+    loadCacheStats();
+    
+    function loadCacheStats() {
+        fetch('/api/cache/stats')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const stats = data.data.cache_stats;
+                document.getElementById('cacheItemCount').textContent = stats.total_items || 0;
+                document.getElementById('cacheMemoryUsage').textContent = 
+                    (stats.memory_usage ? (stats.memory_usage / 1024).toFixed(2) + ' KB' : '0 KB');
+                document.getElementById('cacheHitRate').textContent = 
+                    (stats.hit_rate ? stats.hit_rate.toFixed(1) + '%' : '0%');
+            }
+        })
+        .catch(error => {
+            console.error('获取缓存统计失败:', error);
+        });
+    }
+    
+    // 批量生成音频
+    batchGenerateAudioBtn.addEventListener('click', function() {
+        if (!confirm('确定要为所有单词批量生成音频吗？这可能需要较长时间。')) {
+            return;
+        }
+        
+        this.disabled = true;
+        this.textContent = '⏳ 生成中...';
+        
+        fetch('/api/words/audio/batch', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const results = data.data;
+                alert(`音频生成完成！成功: ${results.success_count}, 失败: ${results.error_count}`);
+            } else {
+                alert('音频生成失败: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('音频生成失败: ' + error.message);
+        })
+        .finally(() => {
+            this.disabled = false;
+            this.textContent = '🔊 批量生成音频';
+        });
+    });
+    
+    // 验证音频文件
+    validateAudioBtn.addEventListener('click', function() {
+        this.disabled = true;
+        this.textContent = '⏳ 验证中...';
+        
+        fetch('/api/words/audio/validate')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const results = data.data;
+                alert(`验证完成！有效: ${results.valid_count}, 无效: ${results.invalid_count}`);
+            } else {
+                alert('验证失败: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('验证失败: ' + error.message);
+        })
+        .finally(() => {
+            this.disabled = false;
+            this.textContent = '✅ 验证音频文件';
+        });
+    // 缓存预热
+    warmupCacheBtn.addEventListener('click', function() {
+        this.disabled = true;
+        this.textContent = '⏳ 预热中...';
+        
+        fetch('/api/cache/warmup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ types: ['words', 'users'] })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('缓存预热完成！预热项目数: ' + data.data.count);
+                loadCacheStats(); // 重新加载缓存统计
+            } else {
+                alert('缓存预热失败: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('缓存预热失败: ' + error.message);
+        })
+        .finally(() => {
+            this.disabled = false;
+            this.textContent = '🔥 缓存预热';
+        });
+    });
+    
+    // 清除缓存
+    clearCacheBtn.addEventListener('click', function() {
+        if (!confirm('确定要清除所有缓存吗？')) {
+            return;
+        }
+        
+        this.disabled = true;
+        this.textContent = '⏳ 清除中...';
+        
+        fetch('/api/cache/clear', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ type: 'all' })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('缓存清除完成！');
+                loadCacheStats(); // 重新加载缓存统计
+            } else {
+                alert('缓存清除失败: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('缓存清除失败: ' + error.message);
+        })
+        .finally(() => {
+            this.disabled = false;
+            this.textContent = '🗑️ 清除缓存';
+        });
+    });
+</script>
+{% endblock %}

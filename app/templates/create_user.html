@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+
+{% block title %}创建用户 - 小学英语单词复习应用{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="create-user-section">
+        <div class="form-container">
+            <div class="form-header">
+                <h1 class="text-center mb-4">创建新用户</h1>
+                <p class="text-center text-secondary mb-4">请填写用户信息，开始您的英语学习之旅</p>
+            </div>
+            
+            <form method="POST" class="user-form" id="createUserForm" data-validation="createUser">
+                <div class="form-group">
+                    <label for="username" class="form-label">
+                        <span class="label-text">用户名</span>
+                        <span class="label-required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="form-input"
+                        placeholder="请输入用户名（2-20个字符）"
+                        required
+                        maxlength="20"
+                        autocomplete="off"
+                    >
+                    <div class="form-help">用户名可以是中文、英文或数字，长度2-20个字符</div>
+                    <div class="form-error" id="usernameError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="grade" class="form-label">
+                        <span class="label-text">年级</span>
+                        <span class="label-required">*</span>
+                    </label>
+                    <select id="grade" name="grade" class="form-select" required>
+                        <option value="">请选择年级</option>
+                        <option value="3">三年级</option>
+                        <option value="4">四年级</option>
+                        <option value="5">五年级</option>
+                        <option value="6">六年级</option>
+                    </select>
+                    <div class="form-help">选择您当前的年级，系统会根据年级推荐相应的词库</div>
+                    <div class="form-error" id="gradeError"></div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn">
+                        <span class="btn-text">创建用户</span>
+                        <span class="btn-loading hidden">创建中...</span>
+                    </button>
+                    
+                    <a href="{{ url_for('main.select_user') }}" class="btn btn-ghost btn-block">
+                        返回用户选择
+                    </a>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+<style>
+.create-user-section {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: var(--spacing-xxl) var(--spacing-md);
+}
+
+.form-container {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xxl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
+}
+
+.form-header {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+}
+
+.label-required {
+    color: var(--danger-color);
+    margin-left: var(--spacing-xs);
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-base);
+    background: var(--white);
+    transition: border-color var(--transition-fast);
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.form-input.error,
+.form-select.error {
+    border-color: var(--danger-color);
+}
+
+.form-help {
+    margin-top: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    line-height: var(--line-height-relaxed);
+}
+
+.form-error {
+    margin-top: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--danger-color);
+    display: none;
+}
+
+.form-error.show {
+    display: block;
+}
+
+.form-actions {
+    margin-top: var(--spacing-xxl);
+}
+
+.form-actions .btn {
+    margin-bottom: var(--spacing-md);
+}
+
+.btn-loading.show {
+    display: inline;
+}
+
+.btn-text.hide {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .create-user-section {
+        padding: var(--spacing-xl) var(--spacing-sm);
+    }
+    
+    .form-container {
+        padding: var(--spacing-lg);
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('createUserForm');
+    const usernameInput = document.getElementById('username');
+    const gradeSelect = document.getElementById('grade');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // 表单验证
+    function validateForm() {
+        let isValid = true;
+        
+        // 验证用户名
+        const username = usernameInput.value.trim();
+        const usernameError = document.getElementById('usernameError');
+        
+        if (!username) {
+            showError(usernameInput, usernameError, '请输入用户名');
+            isValid = false;
+        } else if (username.length < 2 || username.length > 20) {
+            showError(usernameInput, usernameError, '用户名长度应为2-20个字符');
+            isValid = false;
+        } else if (!Helpers.validate.username(username)) {
+            showError(usernameInput, usernameError, '用户名只能包含中文、英文和数字');
+            isValid = false;
+        } else {
+            clearError(usernameInput, usernameError);
+        }
+        
+        // 验证年级
+        const grade = gradeSelect.value;
+        const gradeError = document.getElementById('gradeError');
+        
+        if (!grade) {
+            showError(gradeSelect, gradeError, '请选择年级');
+            isValid = false;
+        } else if (!Helpers.validate.grade(grade)) {
+            showError(gradeSelect, gradeError, '请选择有效的年级');
+            isValid = false;
+        } else {
+            clearError(gradeSelect, gradeError);
+        }
+        
+        return isValid;
+    }
+    
+    function showError(input, errorElement, message) {
+        input.classList.add('error');
+        errorElement.textContent = message;
+        errorElement.classList.add('show');
+    }
+    
+    function clearError(input, errorElement) {
+        input.classList.remove('error');
+        errorElement.textContent = '';
+        errorElement.classList.remove('show');
+    }
+    
+    // 实时验证
+    usernameInput.addEventListener('blur', function() {
+        validateForm();
+    });
+    
+    gradeSelect.addEventListener('change', function() {
+        validateForm();
+    });
+    
+    // 表单提交
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+        
+        // 显示加载状态
+        submitBtn.disabled = true;
+        submitBtn.querySelector('.btn-text').classList.add('hide');
+        submitBtn.querySelector('.btn-loading').classList.remove('hidden');
+        submitBtn.querySelector('.btn-loading').classList.add('show');
+        
+        // 创建用户
+        const formData = new FormData(form);
+        const userData = {
+            username: formData.get('username').trim(),
+            grade: parseInt(formData.get('grade'))
+        };
+        
+        ApiClient.users.create(userData.username, userData.grade)
+            .then(response => {
+                if (response.success) {
+                    WordApp.showAlert('用户创建成功！', 'success');
+                    
+                    // 跳转到首页
+                    setTimeout(() => {
+                        window.location.href = `{{ url_for('main.index') }}?user_id=${response.data.id}`;
+                    }, 1000);
+                } else {
+                    WordApp.showAlert(response.error || '创建用户失败', 'error');
+                    resetSubmitButton();
+                }
+            })
+            .catch(error => {
+                console.error('创建用户失败:', error);
+                WordApp.showAlert('创建用户失败，请稍后重试', 'error');
+                resetSubmitButton();
+            });
+    });
+    
+    function resetSubmitButton() {
+        submitBtn.disabled = false;
+        submitBtn.querySelector('.btn-text').classList.remove('hide');
+        submitBtn.querySelector('.btn-loading').classList.add('hidden');
+        submitBtn.querySelector('.btn-loading').classList.remove('show');
+    }
+});
+</script>
+{% endblock %}

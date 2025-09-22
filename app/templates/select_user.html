@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}选择用户 - 小学英语单词复习应用{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="user-selection">
+        <div class="selection-header">
+            <h1 class="text-center mb-4">选择用户</h1>
+            <p class="text-center text-secondary mb-4">请选择一个用户开始学习，或创建新用户</p>
+        </div>
+        
+        {% if users %}
+        <div class="users-grid">
+            {% for user in users %}
+            <div class="user-card">
+                <div class="user-avatar">
+                    <span class="avatar-icon">👤</span>
+                </div>
+                <div class="user-info">
+                    <h3 class="user-name">{{ user.username }}</h3>
+                    <p class="user-grade">{{ user.grade }}年级</p>
+                    <p class="user-created">
+                        {% if user.created_at %}
+                            创建于 {{ user.created_at.strftime('%Y-%m-%d') if user.created_at.__class__.__name__ == 'datetime' else user.created_at[:10] if user.created_at else '-' }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="user-actions">
+                    <a href="{{ url_for('main.index', user_id=user.id) }}" class="btn btn-primary">
+                        选择此用户
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">👥</div>
+            <h3>还没有用户</h3>
+            <p class="text-secondary">创建第一个用户开始学习吧！</p>
+        </div>
+        {% endif %}
+        
+        <div class="create-user-section">
+            <div class="text-center">
+                <a href="{{ url_for('main.create_user') }}" class="btn btn-secondary btn-lg">
+                    ➕ 创建新用户
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+.user-selection {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-xxl) var(--spacing-md);
+}
+
+.selection-header {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xxl);
+}
+
+.user-card {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-base);
+    border: 1px solid var(--border-light);
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.user-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.user-avatar {
+    margin-bottom: var(--spacing-md);
+}
+
+.avatar-icon {
+    display: inline-block;
+    width: 4rem;
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 2rem;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: var(--border-radius-full);
+}
+
+.user-name {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-xs);
+}
+
+.user-grade {
+    color: var(--primary-color);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-xs);
+}
+
+.user-created {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xxl) var(--spacing-md);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.empty-state h3 {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-secondary);
+}
+
+.create-user-section {
+    padding: var(--spacing-xl) 0;
+    border-top: 1px solid var(--border-light);
+}
+
+@media (max-width: 768px) {
+    .users-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .user-selection {
+        padding: var(--spacing-xl) var(--spacing-sm);
+    }
+}
+</style>
+{% endblock %}

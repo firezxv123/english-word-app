@@ -1,0 +1,530 @@
+[
+  {
+    "word": "computer",
+    "chinese_meaning": "计算机",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "board",
+    "chinese_meaning": "写字板",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "fan",
+    "chinese_meaning": "风扇",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "light",
+    "chinese_meaning": "灯",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "this",
+    "chinese_meaning": "这个",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "is",
+    "chinese_meaning": "是",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "my",
+    "chinese_meaning": "我的",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "that",
+    "chinese_meaning": "那个",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "your",
+    "chinese_meaning": "你的",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "teacher's desk",
+    "chinese_meaning": "讲台",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "picture",
+    "chinese_meaning": "图画",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "wall",
+    "chinese_meaning": "墙壁",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "floor",
+    "chinese_meaning": "地板",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "yes",
+    "chinese_meaning": "是的",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "it",
+    "chinese_meaning": "它",
+    "grade": 4,
+    "unit": 1
+  },
+  {
+    "word": "one",
+    "chinese_meaning": "一",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "two",
+    "chinese_meaning": "二",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "three",
+    "chinese_meaning": "三",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "four",
+    "chinese_meaning": "四",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "five",
+    "chinese_meaning": "五",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "six",
+    "chinese_meaning": "六",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "seven",
+    "chinese_meaning": "七",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "eight",
+    "chinese_meaning": "八",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "nine",
+    "chinese_meaning": "九",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "ten",
+    "chinese_meaning": "十",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "what",
+    "chinese_meaning": "什么",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "time",
+    "chinese_meaning": "时间",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "it's",
+    "chinese_meaning": "它是",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "o'clock",
+    "chinese_meaning": "……点钟",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "math",
+    "chinese_meaning": "数学",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "Chinese",
+    "chinese_meaning": "语文",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "English",
+    "chinese_meaning": "英语",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "P.E.",
+    "chinese_meaning": "体育",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "music",
+    "chinese_meaning": "音乐",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "for",
+    "chinese_meaning": "为",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "class",
+    "chinese_meaning": "课程",
+    "grade": 4,
+    "unit": 2
+  },
+  {
+    "word": "jacket",
+    "chinese_meaning": "夹克衫",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "shirt",
+    "chinese_meaning": "衬衫",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "skirt",
+    "chinese_meaning": "裙子",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "dress",
+    "chinese_meaning": "连衣裙",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "T-shirt",
+    "chinese_meaning": "T恤衫",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "red",
+    "chinese_meaning": "红色的",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "blue",
+    "chinese_meaning": "蓝色的",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "yellow",
+    "chinese_meaning": "黄色的",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "green",
+    "chinese_meaning": "绿色的",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "white",
+    "chinese_meaning": "白色的",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "no",
+    "chinese_meaning": "不",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "not",
+    "chinese_meaning": "不是",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "colour",
+    "chinese_meaning": "颜色",
+    "grade": 4,
+    "unit": 3
+  },
+  {
+    "word": "warm",
+    "chinese_meaning": "暖和的",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "cold",
+    "chinese_meaning": "寒冷的",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "cool",
+    "chinese_meaning": "凉爽的",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "today",
+    "chinese_meaning": "今天",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "jeans",
+    "chinese_meaning": "牛仔裤",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "pants",
+    "chinese_meaning": "长裤",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "socks",
+    "chinese_meaning": "袜子",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "shoes",
+    "chinese_meaning": "鞋子",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "let's",
+    "chinese_meaning": "让我们",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "play",
+    "chinese_meaning": "玩，踢",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "football",
+    "chinese_meaning": "足球",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "snowy",
+    "chinese_meaning": "下雪的",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "sunny",
+    "chinese_meaning": "晴朗的",
+    "grade": 4,
+    "unit": 4
+  },
+  {
+    "word": "how much",
+    "chinese_meaning": "多少钱",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "big",
+    "chinese_meaning": "大的",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "small",
+    "chinese_meaning": "小的",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "long",
+    "chinese_meaning": "长的",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "short",
+    "chinese_meaning": "短的",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "apple",
+    "chinese_meaning": "苹果",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "banana",
+    "chinese_meaning": "香蕉",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "pear",
+    "chinese_meaning": "梨",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "orange",
+    "chinese_meaning": "橙子",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "watermelon",
+    "chinese_meaning": "西瓜",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "are",
+    "chinese_meaning": "是",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "they",
+    "chinese_meaning": "它们",
+    "grade": 4,
+    "unit": 5
+  },
+  {
+    "word": "horse",
+    "chinese_meaning": "马",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "aren't",
+    "chinese_meaning": "不是",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "cat",
+    "chinese_meaning": "猫",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "rabbit",
+    "chinese_meaning": "兔子",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "pig",
+    "chinese_meaning": "猪",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "duck",
+    "chinese_meaning": "鸭子",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "dog",
+    "chinese_meaning": "狗",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "eleven",
+    "chinese_meaning": "十一",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "twelve",
+    "chinese_meaning": "十二",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "thirteen",
+    "chinese_meaning": "十三",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "fifteen",
+    "chinese_meaning": "十五",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "twenty",
+    "chinese_meaning": "二十",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "how many",
+    "chinese_meaning": "多少",
+    "grade": 4,
+    "unit": 6
+  },
+  {
+    "word": "there",
+    "chinese_meaning": "那里",
+    "grade": 4,
+    "unit": 6
+  }
+]

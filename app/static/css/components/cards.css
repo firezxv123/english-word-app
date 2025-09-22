@@ -1,0 +1,322 @@
+/* 卡片组件样式 */
+
+.card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-base);
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card-hover {
+    transition: all var(--transition-base);
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* 卡片头部 */
+.card-header {
+    padding: var(--spacing-lg);
+    background-color: var(--gray-50);
+    border-bottom: 1px solid var(--border-color);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.card-header:first-child {
+    border-top-left-radius: calc(var(--border-radius-lg) - 1px);
+    border-top-right-radius: calc(var(--border-radius-lg) - 1px);
+}
+
+/* 卡片主体 */
+.card-body {
+    padding: var(--spacing-lg);
+}
+
+.card-body:first-child {
+    border-top-left-radius: calc(var(--border-radius-lg) - 1px);
+    border-top-right-radius: calc(var(--border-radius-lg) - 1px);
+}
+
+.card-body:last-child {
+    border-bottom-left-radius: calc(var(--border-radius-lg) - 1px);
+    border-bottom-right-radius: calc(var(--border-radius-lg) - 1px);
+}
+
+/* 卡片底部 */
+.card-footer {
+    padding: var(--spacing-lg);
+    background-color: var(--gray-50);
+    border-top: 1px solid var(--border-color);
+}
+
+.card-footer:last-child {
+    border-bottom-left-radius: calc(var(--border-radius-lg) - 1px);
+    border-bottom-right-radius: calc(var(--border-radius-lg) - 1px);
+}
+
+/* 卡片标题 */
+.card-title {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.card-title:last-child {
+    margin-bottom: 0;
+}
+
+/* 卡片副标题 */
+.card-subtitle {
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.card-subtitle:last-child {
+    margin-bottom: 0;
+}
+
+/* 卡片文本 */
+.card-text {
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--text-primary);
+    line-height: var(--line-height-relaxed);
+}
+
+.card-text:last-child {
+    margin-bottom: 0;
+}
+
+/* 卡片链接 */
+.card-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-right: var(--spacing-md);
+    transition: color var(--transition-fast);
+}
+
+.card-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.card-link:last-child {
+    margin-right: 0;
+}
+
+/* 卡片图片 */
+.card-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.card-img-top {
+    border-top-left-radius: calc(var(--border-radius-lg) - 1px);
+    border-top-right-radius: calc(var(--border-radius-lg) - 1px);
+}
+
+.card-img-bottom {
+    border-bottom-left-radius: calc(var(--border-radius-lg) - 1px);
+    border-bottom-right-radius: calc(var(--border-radius-lg) - 1px);
+}
+
+/* 卡片叠加 */
+.card-img-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: var(--spacing-lg);
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--white);
+    border-radius: calc(var(--border-radius-lg) - 1px);
+}
+
+/* 卡片组 */
+.card-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+.card-group .card {
+    flex: 1 0 0%;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.card-group .card:first-child {
+    border-top-left-radius: var(--border-radius-lg);
+    border-bottom-left-radius: var(--border-radius-lg);
+}
+
+.card-group .card:last-child {
+    border-top-right-radius: var(--border-radius-lg);
+    border-bottom-right-radius: var(--border-radius-lg);
+}
+
+.card-group .card:not(:first-child) {
+    border-left: none;
+}
+
+/* 卡片网格 */
+.card-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.card-grid-2 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card-grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.card-grid-4 {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+/* 卡片尺寸变体 */
+.card-sm .card-header,
+.card-sm .card-body,
+.card-sm .card-footer {
+    padding: var(--spacing-md);
+}
+
+.card-lg .card-header,
+.card-lg .card-body,
+.card-lg .card-footer {
+    padding: var(--spacing-xl);
+}
+
+/* 卡片颜色变体 */
+.card-primary {
+    border-color: var(--primary-color);
+}
+
+.card-primary .card-header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-bottom-color: var(--primary-color);
+}
+
+.card-secondary {
+    border-color: var(--secondary-color);
+}
+
+.card-secondary .card-header {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border-bottom-color: var(--secondary-color);
+}
+
+.card-success {
+    border-color: var(--success-color);
+}
+
+.card-success .card-header {
+    background-color: var(--success-color);
+    color: var(--white);
+    border-bottom-color: var(--success-color);
+}
+
+.card-danger {
+    border-color: var(--danger-color);
+}
+
+.card-danger .card-header {
+    background-color: var(--danger-color);
+    color: var(--white);
+    border-bottom-color: var(--danger-color);
+}
+
+.card-warning {
+    border-color: var(--warning-color);
+}
+
+.card-warning .card-header {
+    background-color: var(--warning-color);
+    color: var(--white);
+    border-bottom-color: var(--warning-color);
+}
+
+.card-info {
+    border-color: var(--info-color);
+}
+
+.card-info .card-header {
+    background-color: var(--info-color);
+    color: var(--white);
+    border-bottom-color: var(--info-color);
+}
+
+/* 轮廓卡片 */
+.card-outline-primary {
+    border-color: var(--primary-color);
+}
+
+.card-outline-secondary {
+    border-color: var(--secondary-color);
+}
+
+.card-outline-success {
+    border-color: var(--success-color);
+}
+
+.card-outline-danger {
+    border-color: var(--danger-color);
+}
+
+.card-outline-warning {
+    border-color: var(--warning-color);
+}
+
+.card-outline-info {
+    border-color: var(--info-color);
+}
+
+/* 无边框卡片 */
+.card-borderless {
+    border: none;
+}
+
+/* 响应式卡片 */
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-group {
+        flex-direction: column;
+    }
+    
+    .card-group .card {
+        border-radius: var(--border-radius-lg);
+        border: 1px solid var(--border-color);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .card-group .card:last-child {
+        margin-bottom: 0;
+    }
+    
+    .card-body,
+    .card-header,
+    .card-footer {
+        padding: var(--spacing-md);
+    }
+}

@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+
+{% block title %}系统维护 - 小学英语单词复习应用{% endblock %}
+
+{% block extra_css %}
+<style>
+.maintenance-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.maintenance-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-xl) 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    border-radius: var(--border-radius-lg);
+}
+
+.test-section {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.test-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.test-item {
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius-md);
+    background: var(--gray-50);
+}
+
+.test-result {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius-sm);
+    font-family: monospace;
+    font-size: var(--font-size-sm);
+}
+
+.success { background: var(--success-light); color: var(--success-color); }
+.error { background: var(--danger-light); color: var(--danger-color); }
+.loading { background: var(--info-light); color: var(--info-color); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="maintenance-container">
+    <section class="maintenance-header">
+        <h1>🔧 系统维护</h1>
+        <p>页面和API测试工具</p>
+    </section>
+
+    <section class="test-section">
+        <h2>📱 页面测试</h2>
+        <div class="test-grid">
+            <div class="test-item">
+                <h4>基础页面</h4>
+                <button onclick="testPage('/', '首页')" class="btn btn-sm btn-primary">测试首页</button>
+                <button onclick="testPage('/user/select', '用户选择')" class="btn btn-sm btn-secondary">测试用户选择</button>
+                <div id="basic-pages-result" class="test-result"></div>
+            </div>
+            
+            <div class="test-item">
+                <h4>参数处理测试</h4>
+                <button onclick="testParameterHandling()" class="btn btn-sm btn-warning">测试参数处理</button>
+                <div id="param-result" class="test-result"></div>
+            </div>
+            
+            <div class="test-item">
+                <h4>API测试</h4>
+                <button onclick="testAPI()" class="btn btn-sm btn-info">测试API</button>
+                <div id="api-result" class="test-result"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="test-section">
+        <h2>🧪 详细测试</h2>
+        <div class="test-grid">
+            <div class="test-item">
+                <h4>词库相关</h4>
+                <button onclick="testWords()" class="btn btn-sm btn-success">测试词库功能</button>
+                <div id="words-result" class="test-result"></div>
+            </div>
+            
+            <div class="test-item">
+                <h4>用户相关</h4>
+                <button onclick="testUsers()" class="btn btn-sm btn-success">测试用户功能</button>
+                <div id="users-result" class="test-result"></div>
+            </div>
+            
+            <div class="test-item">
+                <h4>缓存系统</h4>
+                <button onclick="testCache()" class="btn btn-sm btn-success">测试缓存</button>
+                <div id="cache-result" class="test-result"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="test-section">
+        <h2>📊 系统状态</h2>
+        <div id="system-status">
+            <button onclick="checkSystemStatus()" class="btn btn-primary">检查系统状态</button>
+            <div id="status-result" class="test-result"></div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function showResult(elementId, message, type = 'success') {
+    const element = document.getElementById(elementId);
+    element.className = `test-result ${type}`;
+    element.textContent = message;
+}
+
+function showLoading(elementId, message = '测试中...') {
+    showResult(elementId, message, 'loading');
+}
+
+async function testPage(url, description) {
+    showLoading('basic-pages-result', `测试${description}...`);
+    
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            showResult('basic-pages-result', `✅ ${description}测试成功`, 'success');
+        } else {
+            showResult('basic-pages-result', `❌ ${description}测试失败: ${response.status}`, 'error');
+        }
+    } catch (error) {
+        showResult('basic-pages-result', `❌ ${description}测试错误: ${error.message}`, 'error');
+    }
+}
+
+async function testParameterHandling() {
+    showLoading('param-result', '测试参数处理...');
+    
+    const testCases = [
+        { url: '/api/words?grade=&unit=', desc: '空参数' },
+        { url: '/api/words?grade=abc&unit=xyz', desc: '非数字参数' },
+        { url: '/api/words?grade=3&unit=1', desc: '正常参数' },
+    ];
+    
+    let results = [];
+    
+    for (const testCase of testCases) {
+        try {
+            const response = await fetch(testCase.url);
+            if (response.ok) {
+                results.push(`✅ ${testCase.desc}`);
+            } else {
+                results.push(`❌ ${testCase.desc}: ${response.status}`);
+            }
+        } catch (error) {
+            results.push(`❌ ${testCase.desc}: ${error.message}`);
+        }
+    }
+    
+    showResult('param-result', results.join('\n'), results.every(r => r.startsWith('✅')) ? 'success' : 'error');
+}
+
+async function testAPI() {
+    showLoading('api-result', '测试API...');
+    
+    const apis = [
+        '/api/words',
+        '/api/words/grades', 
+        '/api/words/statistics',
+        '/api/users',
+        '/api/cache/stats'
+    ];
+    
+    let results = [];
+    
+    for (const api of apis) {
+        try {
+            const response = await fetch(api);
+            const data = await response.json();
+            
+            if (response.ok && data.success !== false) {
+                results.push(`✅ ${api}`);
+            } else {
+                results.push(`❌ ${api}: ${data.error || response.status}`);
+            }
+        } catch (error) {
+            results.push(`❌ ${api}: ${error.message}`);
+        }
+    }
+    
+    showResult('api-result', results.join('\n'), results.every(r => r.startsWith('✅')) ? 'success' : 'error');
+}
+
+async function testWords() {
+    showLoading('words-result', '测试词库功能...');
+    
+    try {
+        // 测试获取年级
+        const gradesResponse = await fetch('/api/words/grades');
+        const gradesData = await gradesResponse.json();
+        
+        if (!gradesData.success) throw new Error('获取年级失败');
+        
+        // 测试获取单元
+        const unitsResponse = await fetch('/api/words/units/3');
+        const unitsData = await unitsResponse.json();
+        
+        if (!unitsData.success) throw new Error('获取单元失败');
+        
+        // 测试获取词库
+        const wordsResponse = await fetch('/api/words?grade=3&unit=1');
+        const wordsData = await wordsResponse.json();
+        
+        if (!wordsData.success) throw new Error('获取词库失败');
+        
+        showResult('words-result', `✅ 词库功能正常\n年级数: ${gradesData.data.length}\n单元数: ${unitsData.data.length}\n词汇数: ${wordsData.count}`, 'success');
+        
+    } catch (error) {
+        showResult('words-result', `❌ 词库功能错误: ${error.message}`, 'error');
+    }
+}
+
+async function testUsers() {
+    showLoading('users-result', '测试用户功能...');
+    
+    try {
+        const response = await fetch('/api/users');
+        const data = await response.json();
+        
+        if (data.success) {
+            showResult('users-result', `✅ 用户功能正常\n用户数: ${data.count}`, 'success');
+        } else {
+            throw new Error(data.error);
+        }
+    } catch (error) {
+        showResult('users-result', `❌ 用户功能错误: ${error.message}`, 'error');
+    }
+}
+
+async function testCache() {
+    showLoading('cache-result', '测试缓存系统...');
+    
+    try {
+        const response = await fetch('/api/cache/health');
+        const data = await response.json();
+        
+        if (data.success) {
+            showResult('cache-result', `✅ 缓存系统正常\n状态: ${data.data.status}`, 'success');
+        } else {
+            throw new Error(data.error);
+        }
+    } catch (error) {
+        showResult('cache-result', `❌ 缓存系统错误: ${error.message}`, 'error');
+    }
+}
+
+async function checkSystemStatus() {
+    showLoading('status-result', '检查系统状态...');
+    
+    try {
+        const checks = [
+            { name: '应用响应', url: '/', check: r => r.ok },
+            { name: 'API可用性', url: '/api/words', check: r => r.ok },
+            { name: '缓存服务', url: '/api/cache/stats', check: r => r.ok },
+        ];
+        
+        let results = [];
+        
+        for (const check of checks) {
+            try {
+                const response = await fetch(check.url);
+                if (check.check(response)) {
+                    results.push(`✅ ${check.name}: 正常`);
+                } else {
+                    results.push(`❌ ${check.name}: 异常 (${response.status})`);
+                }
+            } catch (error) {
+                results.push(`❌ ${check.name}: 错误 (${error.message})`);
+            }
+        }
+        
+        const allOk = results.every(r => r.startsWith('✅'));
+        showResult('status-result', 
+            `系统检查完成:\n${results.join('\n')}\n\n整体状态: ${allOk ? '✅ 正常' : '⚠️ 有问题'}`, 
+            allOk ? 'success' : 'error'
+        );
+        
+    } catch (error) {
+        showResult('status-result', `❌ 系统检查失败: ${error.message}`, 'error');
+    }
+}
+
+// 页面加载时自动检查
+document.addEventListener('DOMContentLoaded', function() {
+    checkSystemStatus();
+});
+</script>
+{% endblock %}

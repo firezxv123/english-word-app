@@ -1,0 +1,321 @@
+/* 移动端响应式样式 */
+
+/* 平板端 (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .container {
+        padding: 0 var(--spacing-lg);
+    }
+    
+    .main-content {
+        padding-top: 4.5rem;
+    }
+    
+    /* 导航调整 */
+    .nav-container {
+        padding: 0 var(--spacing-lg);
+    }
+    
+    .nav-link {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    /* 网格调整 */
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .function-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 移动端 (≤768px) */
+@media (max-width: 768px) {
+    /* 基础布局 */
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .main-content {
+        padding-top: 4rem;
+    }
+    
+    /* 导航栏移动端适配 */
+    .navbar {
+        height: 3.5rem;
+    }
+    
+    .nav-container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .brand-link {
+        font-size: var(--font-size-lg);
+    }
+    
+    /* 欢迎区域 */
+    .welcome-section {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+    
+    .welcome-title {
+        font-size: var(--font-size-3xl);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .welcome-description {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    .welcome-actions {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .welcome-actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    /* 网格系统 */
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .function-grid,
+    .features-grid,
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+    
+    /* 卡片调整 */
+    .function-card,
+    .card {
+        padding: var(--spacing-lg);
+    }
+    
+    .card-title {
+        font-size: var(--font-size-lg);
+    }
+    
+    /* 按钮响应式 */
+    .btn-responsive {
+        width: 100%;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    /* 表单移动端优化 */
+    .form-container {
+        padding: var(--spacing-lg);
+    }
+    
+    .form-input,
+    .form-select,
+    .form-textarea {
+        padding: var(--spacing-md);
+        font-size: 16px; /* 防止iOS缩放 */
+    }
+    
+    /* Flash消息调整 */
+    .flash-messages {
+        top: 4rem;
+        left: var(--spacing-sm);
+        right: var(--spacing-sm);
+        max-width: none;
+    }
+    
+    /* 底部调整 */
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-sm);
+    }
+    
+    .version-info {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+}
+
+/* 小屏手机 (≤480px) */
+@media (max-width: 480px) {
+    /* 进一步缩小间距 */
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .welcome-section {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+    
+    .welcome-title {
+        font-size: var(--font-size-2xl);
+    }
+    
+    /* 统计网格单列 */
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* 年级统计 */
+    .grade-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* 表单进一步优化 */
+    .form-container {
+        padding: var(--spacing-md);
+        margin: var(--spacing-md);
+    }
+    
+    /* 卡片更紧凑 */
+    .function-card,
+    .card {
+        padding: var(--spacing-md);
+    }
+    
+    .card-icon {
+        font-size: 2.5rem;
+    }
+    
+    /* 按钮调整 */
+    .btn {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .btn-lg {
+        padding: var(--spacing-lg) var(--spacing-xl);
+    }
+    
+    /* 浮动按钮位置 */
+    .btn-float {
+        bottom: var(--spacing-md);
+        right: var(--spacing-md);
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+/* 横屏手机特殊处理 */
+@media (max-width: 896px) and (orientation: landscape) and (max-height: 500px) {
+    .main-content {
+        padding-top: 3rem;
+    }
+    
+    .navbar {
+        height: 3rem;
+    }
+    
+    .welcome-section {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+    
+    .welcome-title {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .welcome-description {
+        margin-bottom: var(--spacing-lg);
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    /* 增大点击目标 */
+    .btn {
+        min-height: 44px;
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .nav-link {
+        min-height: 44px;
+        padding: var(--spacing-md);
+    }
+    
+    /* 移除hover效果 */
+    .card:hover,
+    .function-card:hover,
+    .stat-card:hover {
+        transform: none;
+        box-shadow: var(--shadow-base);
+    }
+    
+    .btn:hover {
+        transform: none;
+    }
+    
+    /* 优化表单控件 */
+    .form-input,
+    .form-select {
+        min-height: 44px;
+    }
+}
+
+/* 高分辨率屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* 优化图标和图片显示 */
+    .card-icon,
+    .feature-icon,
+    .stat-icon {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* 深色模式移动端适配 */
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+    .nav-menu {
+        background-color: var(--gray-800);
+        border-top-color: var(--gray-600);
+    }
+    
+    .nav-link {
+        border-bottom-color: var(--gray-600);
+    }
+    
+    .user-info {
+        background-color: var(--gray-700);
+    }
+}
+
+/* 减少动画的用户偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .function-card,
+    .btn,
+    .nav-menu {
+        transition: none;
+    }
+    
+    .welcome-actions .btn,
+    .stat-card {
+        animation: none;
+    }
+}
+
+/* 可访问性增强 */
+@media (prefers-contrast: high) {
+    .btn {
+        border-width: 2px;
+    }
+    
+    .form-input:focus,
+    .form-select:focus {
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.5);
+    }
+    
+    .card {
+        border-width: 2px;
+    }
+}

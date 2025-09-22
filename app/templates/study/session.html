@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+
+{% block title %}学习会话 - {{ user.username }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/study-session.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="study-session">
+        <div class="session-header">
+            <div class="session-info">
+                <h1 class="session-title">📖 学习会话</h1>
+                <div class="session-meta">
+                    <span class="meta-item">👤 {{ user.username }}</span>
+                    <span class="meta-item">📚 {{ session.words|length }}个单词</span>
+                    <span class="meta-item" id="sessionTime">⏱️ 00:00</span>
+                </div>
+            </div>
+            
+            <div class="session-progress">
+                <div class="progress-info">
+                    <span id="currentIndex">1</span> / <span id="totalWords">{{ session.words|length }}</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="word-card" id="wordCard">
+            <!-- 单词内容将通过JavaScript动态加载 -->
+        </div>
+
+        <div class="study-controls">
+            <button id="prevBtn" class="btn btn-outline-secondary" disabled>
+                ⬅️ 上一个
+            </button>
+            
+            <div class="mastery-controls">
+                <p class="mastery-label">掌握程度：</p>
+                <div class="mastery-buttons">
+                    <button class="mastery-btn" data-level="1">😟 不会</button>
+                    <button class="mastery-btn" data-level="2">🤔 有印象</button>
+                    <button class="mastery-btn" data-level="3">😊 认识</button>
+                    <button class="mastery-btn" data-level="4">😄 熟练</button>
+                    <button class="mastery-btn" data-level="5">🌟 掌握</button>
+                </div>
+            </div>
+            
+            <button id="nextBtn" class="btn btn-primary">
+                下一个 ➡️
+            </button>
+        </div>
+
+        <div class="session-actions">
+            <button id="pauseBtn" class="btn btn-outline-warning">⏸️ 暂停</button>
+            <button id="finishBtn" class="btn btn-success">✅ 完成学习</button>
+            <a href="{{ url_for('main.study_page', user_id=user.id) }}" class="btn btn-outline-danger">
+                ❌ 退出学习
+            </a>
+        </div>
+    </section>
+</div>
+
+<!-- 单词详情模态框 -->
+<div class="modal" id="wordDetailModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>单词详情</h3>
+            <button class="modal-close" id="closeModal">×</button>
+        </div>
+        <div class="modal-body" id="wordDetailContent">
+            <!-- 详细内容 -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+class StudySession {
+    constructor(sessionData, userId) {
+        this.sessionData = sessionData;
+        this.userId = userId;
+        this.currentIndex = 0;
+        this.words = sessionData.words;
+        this.studyRecord = new Map(); // 记录学习进度
+        this.startTime = new Date();
+        this.timer = null;
+        
+        this.init();
+    }
+    
+    init() {
+        this.setupEventListeners();
+        this.startTimer();
+        this.renderCurrentWord();
+        this.updateProgress();
+    }
+    
+    setupEventListeners() {
+        // 导航按钮
+        document.getElementById('prevBtn').addEventListener('click', () => this.prevWord());
+        document.getElementById('nextBtn').addEventListener('click', () => this.nextWord());
+        
+        // 掌握程度按钮
+        document.querySelectorAll('.mastery-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => this.setMastery(parseInt(e.target.dataset.level)));
+        });
+        
+        // 会话控制
+        document.getElementById('pauseBtn').addEventListener('click', () => this.pauseSession());
+        document.getElementById('finishBtn').addEventListener('click', () => this.finishSession());
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
+    }
+    
+    renderCurrentWord() {
+        const word = this.words[this.currentIndex];
+        if (!word) return;
+        
+        const wordCard = document.getElementById('wordCard');
+        wordCard.innerHTML = `
+            <div class="word-main">
+                <div class="word-english">
+                    <h2 class="english-text">${word.word}</h2>
+                    <button class="audio-btn" onclick="playAudio('${word.word}')">🔊</button>
+                </div>
+                
+                <div class="word-phonetic">
+                    <span class="phonetic">${word.phonetic || ''}</span>
+                </div>
+                
+                <div class="word-meaning">
+                    <p class="meaning-text">${word.chinese_meaning}</p>
+                </div>
+            </div>
+            
+            <div class="word-details" id="wordDetails" style="display: none;">
+                <div class="detail-section">
+                    <h4>🔤 自然拼读</h4>
+                    <p class="phonics">${word.phonics_breakdown || '暂无拼读信息'}</p>
+                </div>
+                
+                <div class="detail-section">
+                    <h4>💭 记忆方法</h4>
+                    <p class="memory-method">${word.memory_method || '暂无记忆方法'}</p>
+                </div>
+            </div>
+            
+            <div class="word-actions">
+                <button class="btn btn-outline-info" onclick="toggleDetails()">
+                    📝 查看详情
+                </button>
+                <button class="btn btn-outline-secondary" onclick="markDifficult()">
+                    ⭐ 标记难词
+                </button>
+            </div>
+        `;
+        
+        this.updateMasteryDisplay();
+    }
+    
+    updateMasteryDisplay() {
+        const currentRecord = this.studyRecord.get(this.currentIndex);
+        const buttons = document.querySelectorAll('.mastery-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        
+        if (currentRecord) {
+            const selectedBtn = document.querySelector(`[data-level="${currentRecord.level}"]`);
+            if (selectedBtn) selectedBtn.classList.add('selected');
+        }
+    }
+    
+    setMastery(level) {
+        const word = this.words[this.currentIndex];
+        this.studyRecord.set(this.currentIndex, {
+            wordId: word.id,
+            level: level,
+            timestamp: new Date()
+        });
+        
+        this.updateMasteryDisplay();
+        
+        // 自动保存到服务器
+        this.saveProgress(word.id, level);
+        
+        // 如果选择了掌握程度，自动进入下一个
+        setTimeout(() => {
+            if (this.currentIndex < this.words.length - 1) {
+                this.nextWord();
+            }
+        }, 500);
+    }
+    
+    async saveProgress(wordId, masteryLevel) {
+        try {
+            await ApiClient.study.recordProgress(this.userId, wordId, masteryLevel);
+        } catch (error) {
+            console.error('保存学习进度失败:', error);
+        }
+    }
+    
+    nextWord() {
+        if (this.currentIndex < this.words.length - 1) {
+            this.currentIndex++;
+            this.renderCurrentWord();
+            this.updateProgress();
+            this.updateNavigation();
+        }
+    }
+    
+    prevWord() {
+        if (this.currentIndex > 0) {
+            this.currentIndex--;
+            this.renderCurrentWord();
+            this.updateProgress();
+            this.updateNavigation();
+        }
+    }
+    
+    updateProgress() {
+        document.getElementById('currentIndex').textContent = this.currentIndex + 1;
+        document.getElementById('totalWords').textContent = this.words.length;
+        
+        const progressPercent = ((this.currentIndex + 1) / this.words.length) * 100;
+        document.getElementById('progressFill').style.width = progressPercent + '%';
+    }
+    
+    updateNavigation() {
+        document.getElementById('prevBtn').disabled = this.currentIndex === 0;
+        document.getElementById('nextBtn').disabled = this.currentIndex === this.words.length - 1;
+    }
+    
+    startTimer() {
+        this.timer = setInterval(() => {
+            const elapsed = new Date() - this.startTime;
+            const minutes = Math.floor(elapsed / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            
+            document.getElementById('sessionTime').textContent = 
+                `⏱️ ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+    }
+    
+    pauseSession() {
+        if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = null;
+            document.getElementById('pauseBtn').textContent = '▶️ 继续';
+            document.getElementById('pauseBtn').onclick = () => this.resumeSession();
+        }
+    }
+    
+    resumeSession() {
+        this.startTimer();
+        document.getElementById('pauseBtn').textContent = '⏸️ 暂停';
+        document.getElementById('pauseBtn').onclick = () => this.pauseSession();
+    }
+    
+    finishSession() {
+        const studiedCount = this.studyRecord.size;
+        const totalTime = Math.floor((new Date() - this.startTime) / 1000);
+        
+        if (confirm(`学习完成！\\n学习了 ${studiedCount} 个单词\\n用时 ${Math.floor(totalTime/60)} 分 ${totalTime%60} 秒\\n\\n确定结束学习吗？`)) {
+            window.location.href = `{{ url_for('main.study_page', user_id=user.id) }}?completed=1`;
+        }
+    }
+    
+    handleKeyboard(e) {
+        switch(e.key) {
+            case 'ArrowLeft':
+                e.preventDefault();
+                this.prevWord();
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                this.nextWord();
+                break;
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+                e.preventDefault();
+                this.setMastery(parseInt(e.key));
+                break;
+            case 'Escape':
+                e.preventDefault();
+                this.pauseSession();
+                break;
+        }
+    }
+}
+
+// 全局函数
+function toggleDetails() {
+    const details = document.getElementById('wordDetails');
+    const btn = event.target;
+    
+    if (details.style.display === 'none') {
+        details.style.display = 'block';
+        btn.textContent = '📝 隐藏详情';
+    } else {
+        details.style.display = 'none';
+        btn.textContent = '📝 查看详情';
+    }
+}
+
+function playAudio(word) {
+    // 这里可以集成语音合成API
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        speechSynthesis.speak(utterance);
+    }
+}
+
+function markDifficult() {
+    WordApp.showAlert('已标记为难词，将在复习中重点练习', 'info');
+}
+
+// 初始化学习会话
+document.addEventListener('DOMContentLoaded', function() {
+    const sessionData = {{ session|tojson }};
+    const userId = {{ user.id }};
+    
+    window.studySession = new StudySession(sessionData, userId);
+});
+</script>
+{% endblock %}

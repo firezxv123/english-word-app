@@ -1,0 +1,374 @@
+[
+  {
+    "word": "pen",
+    "chinese_meaning": "钢笔",
+    "grade": 3,
+    "unit": 1
+  },
+  {
+    "word": "pencil",
+    "chinese_meaning": "铅笔",
+    "grade": 3,
+    "unit": 1
+  },
+  {
+    "word": "pencil-case",
+    "chinese_meaning": "铅笔盒",
+    "grade": 3,
+    "unit": 1
+  },
+  {
+    "word": "ruler",
+    "chinese_meaning": "尺子",
+    "grade": 3,
+    "unit": 1
+  },
+  {
+    "word": "eraser",
+    "chinese_meaning": "橡皮",
+    "grade": 3,
+    "unit": 1
+  },
+  {
+    "word": "crayon",
+    "chinese_meaning": "蜡笔",
+    "grade": 3,
+    "unit": 1
+  },
+  {
+    "word": "book",
+    "chinese_meaning": "书",
+    "grade": 3,
+    "unit": 1
+  },
+  {
+    "word": "bag",
+    "chinese_meaning": "包",
+    "grade": 3,
+    "unit": 1
+  },
+  {
+    "word": "sharpener",
+    "chinese_meaning": "卷笔刀",
+    "grade": 3,
+    "unit": 1
+  },
+  {
+    "word": "school",
+    "chinese_meaning": "学校",
+    "grade": 3,
+    "unit": 1
+  },
+  {
+    "word": "red",
+    "chinese_meaning": "红色的",
+    "grade": 3,
+    "unit": 2
+  },
+  {
+    "word": "blue",
+    "chinese_meaning": "蓝色的",
+    "grade": 3,
+    "unit": 2
+  },
+  {
+    "word": "yellow",
+    "chinese_meaning": "黄色的",
+    "grade": 3,
+    "unit": 2
+  },
+  {
+    "word": "green",
+    "chinese_meaning": "绿色的",
+    "grade": 3,
+    "unit": 2
+  },
+  {
+    "word": "purple",
+    "chinese_meaning": "紫色的",
+    "grade": 3,
+    "unit": 2
+  },
+  {
+    "word": "white",
+    "chinese_meaning": "白色的",
+    "grade": 3,
+    "unit": 2
+  },
+  {
+    "word": "black",
+    "chinese_meaning": "黑色的",
+    "grade": 3,
+    "unit": 2
+  },
+  {
+    "word": "orange",
+    "chinese_meaning": "橙色的",
+    "grade": 3,
+    "unit": 2
+  },
+  {
+    "word": "pink",
+    "chinese_meaning": "粉色的",
+    "grade": 3,
+    "unit": 2
+  },
+  {
+    "word": "brown",
+    "chinese_meaning": "棕色的",
+    "grade": 3,
+    "unit": 2
+  },
+  {
+    "word": "face",
+    "chinese_meaning": "脸",
+    "grade": 3,
+    "unit": 3
+  },
+  {
+    "word": "ear",
+    "chinese_meaning": "耳朵",
+    "grade": 3,
+    "unit": 3
+  },
+  {
+    "word": "eye",
+    "chinese_meaning": "眼睛",
+    "grade": 3,
+    "unit": 3
+  },
+  {
+    "word": "nose",
+    "chinese_meaning": "鼻子",
+    "grade": 3,
+    "unit": 3
+  },
+  {
+    "word": "mouth",
+    "chinese_meaning": "嘴",
+    "grade": 3,
+    "unit": 3
+  },
+  {
+    "word": "arm",
+    "chinese_meaning": "胳膊",
+    "grade": 3,
+    "unit": 3
+  },
+  {
+    "word": "finger",
+    "chinese_meaning": "手指",
+    "grade": 3,
+    "unit": 3
+  },
+  {
+    "word": "leg",
+    "chinese_meaning": "腿",
+    "grade": 3,
+    "unit": 3
+  },
+  {
+    "word": "foot",
+    "chinese_meaning": "脚",
+    "grade": 3,
+    "unit": 3
+  },
+  {
+    "word": "body",
+    "chinese_meaning": "身体",
+    "grade": 3,
+    "unit": 3
+  },
+  {
+    "word": "cake",
+    "chinese_meaning": "蛋糕",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "bread",
+    "chinese_meaning": "面包",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "hot dog",
+    "chinese_meaning": "热狗",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "hamburger",
+    "chinese_meaning": "汉堡包",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "chicken",
+    "chinese_meaning": "鸡肉",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "French fries",
+    "chinese_meaning": "榨薯条",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "Coke",
+    "chinese_meaning": "可乐",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "juice",
+    "chinese_meaning": "果汁",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "milk",
+    "chinese_meaning": "牛奶",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "water",
+    "chinese_meaning": "水",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "tea",
+    "chinese_meaning": "茶",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "coffee",
+    "chinese_meaning": "咖啡",
+    "grade": 3,
+    "unit": 4
+  },
+  {
+    "word": "one",
+    "chinese_meaning": "一",
+    "grade": 3,
+    "unit": 5
+  },
+  {
+    "word": "two",
+    "chinese_meaning": "二",
+    "grade": 3,
+    "unit": 5
+  },
+  {
+    "word": "three",
+    "chinese_meaning": "三",
+    "grade": 3,
+    "unit": 5
+  },
+  {
+    "word": "four",
+    "chinese_meaning": "四",
+    "grade": 3,
+    "unit": 5
+  },
+  {
+    "word": "five",
+    "chinese_meaning": "五",
+    "grade": 3,
+    "unit": 5
+  },
+  {
+    "word": "six",
+    "chinese_meaning": "六",
+    "grade": 3,
+    "unit": 5
+  },
+  {
+    "word": "seven",
+    "chinese_meaning": "七",
+    "grade": 3,
+    "unit": 5
+  },
+  {
+    "word": "eight",
+    "chinese_meaning": "八",
+    "grade": 3,
+    "unit": 5
+  },
+  {
+    "word": "nine",
+    "chinese_meaning": "九",
+    "grade": 3,
+    "unit": 5
+  },
+  {
+    "word": "ten",
+    "chinese_meaning": "十",
+    "grade": 3,
+    "unit": 5
+  },
+  {
+    "word": "doll",
+    "chinese_meaning": "玩具娃娃",
+    "grade": 3,
+    "unit": 6
+  },
+  {
+    "word": "boat",
+    "chinese_meaning": "小船",
+    "grade": 3,
+    "unit": 6
+  },
+  {
+    "word": "ball",
+    "chinese_meaning": "球",
+    "grade": 3,
+    "unit": 6
+  },
+  {
+    "word": "kite",
+    "chinese_meaning": "风筝",
+    "grade": 3,
+    "unit": 6
+  },
+  {
+    "word": "balloon",
+    "chinese_meaning": "气球",
+    "grade": 3,
+    "unit": 6
+  },
+  {
+    "word": "car",
+    "chinese_meaning": "小汽车",
+    "grade": 3,
+    "unit": 6
+  },
+  {
+    "word": "plane",
+    "chinese_meaning": "飞机",
+    "grade": 3,
+    "unit": 6
+  },
+  {
+    "word": "bike",
+    "chinese_meaning": "自行车",
+    "grade": 3,
+    "unit": 6
+  },
+  {
+    "word": "bus",
+    "chinese_meaning": "公共汽车",
+    "grade": 3,
+    "unit": 6
+  },
+  {
+    "word": "taxi",
+    "chinese_meaning": "出租车",
+    "grade": 3,
+    "unit": 6
+  }
+]

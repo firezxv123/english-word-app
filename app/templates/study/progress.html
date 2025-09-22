@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}学习进度 - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="progress-section">
+        <div class="section-header">
+            <h1>📊 学习进度</h1>
+            <p class="section-description">查看您的学习成果和进度统计</p>
+        </div>
+
+        {% if progress %}
+        <div class="progress-overview">
+            <div class="overview-cards">
+                <div class="overview-card">
+                    <div class="card-icon">📚</div>
+                    <div class="card-content">
+                        <div class="card-title">已学习</div>
+                        <div class="card-value">{{ progress.progress.studied_words }}</div>
+                        <div class="card-label">个单词</div>
+                    </div>
+                </div>
+
+                <div class="overview-card">
+                    <div class="card-icon">⭐</div>
+                    <div class="card-content">
+                        <div class="card-title">已掌握</div>
+                        <div class="card-value">{{ progress.progress.mastered_words }}</div>
+                        <div class="card-label">个单词</div>
+                    </div>
+                </div>
+
+                <div class="overview-card">
+                    <div class="card-icon">📈</div>
+                    <div class="card-content">
+                        <div class="card-title">掌握率</div>
+                        <div class="card-value">{{ progress.progress.mastery_rate }}%</div>
+                        <div class="card-label">完成度</div>
+                    </div>
+                </div>
+
+                <div class="overview-card">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-content">
+                        <div class="card-title">平均分</div>
+                        <div class="card-value">{{ progress.progress.average_mastery }}</div>
+                        <div class="card-label">掌握程度</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if progress.recent_words %}
+        <div class="recent-words">
+            <h2>📖 最近学习的单词</h2>
+            <div class="word-list">
+                {% for record in progress.recent_words %}
+                <div class="word-item">
+                    <div class="word-content">
+                        <span class="word-text">{{ record.word.word }}</span>
+                        <span class="word-meaning">{{ record.word.chinese_meaning }}</span>
+                    </div>
+                    <div class="word-mastery">
+                        <div class="mastery-level level-{{ record.mastery_level }}">
+                            {% if record.mastery_level == 1 %}😟
+                            {% elif record.mastery_level == 2 %}🤔
+                            {% elif record.mastery_level == 3 %}😊
+                            {% elif record.mastery_level == 4 %}😄
+                            {% else %}🌟
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="word-time">
+                        {% if record.studied_at %}
+                            {{ record.studied_at.strftime('%m-%d') if record.studied_at.__class__.__name__ == 'datetime' else record.studied_at[:10][5:] if record.studied_at else '-' }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        <div class="progress-actions">
+            <a href="{{ url_for('main.study_page', user_id=user.id) }}" class="btn btn-primary">
+                继续学习
+            </a>
+            <a href="{{ url_for('main.study_statistics', user_id=user.id) }}" class="btn btn-secondary">
+                详细统计
+            </a>
+        </div>
+    </section>
+</div>
+
+<style>
+.progress-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+}
+
+.section-header h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.section-description {
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+}
+
+.overview-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xxl);
+}
+
+.overview-card {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-base);
+    text-align: center;
+    border: 1px solid var(--border-light);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.card-title {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.recent-words {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.recent-words h2 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.word-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.word-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+}
+
+.word-content {
+    flex: 1;
+}
+
+.word-text {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-right: var(--spacing-md);
+}
+
+.word-meaning {
+    color: var(--text-secondary);
+}
+
+.mastery-level {
+    font-size: 1.5rem;
+    margin: 0 var(--spacing-md);
+}
+
+.word-time {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    min-width: 60px;
+    text-align: right;
+}
+
+.progress-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .overview-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .word-item {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-sm);
+    }
+    
+    .progress-actions {
+        flex-direction: column;
+    }
+}
+</style>
+{% endblock %}

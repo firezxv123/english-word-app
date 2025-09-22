@@ -1,0 +1,35 @@
+# Git 代码同步命令
+# 请在项目根目录下依次执行以下命令：
+
+# 1. 检查当前Git状态
+git status
+
+# 2. 添加所有更改的文件
+git add .
+
+# 3. 提交更改（附带详细说明）
+git commit -m "完善六年级词库，添加完整的人教版PEP词汇
+
+📚 主要更新内容：
+- 新增 grade6_words_complete.json：154个完整的六年级核心词汇
+- 新增 grade6_words_additional.json：76个补充词汇  
+- 新增 grade6_words_extended.json：47个扩展词汇
+- 新增专门的六年级词库导入路由 /admin/words/import_grade6
+- 更新词库管理界面，添加六年级词库补充按钮
+- 解决用户反馈的'6年级词库还缺少很多'问题
+
+🎯 词库来源：2024年最新人教版PEP小学英语六年级教材
+📈 词汇改进：从原来70个词汇增加到200+个
+🔧 功能增强：改进词库管理和导入体验
+🌟 用户体验：提供一键补充完整词库功能"
+
+# 4. 推送到远程仓库（先尝试main分支）
+git push origin main
+
+# 如果上面的命令失败，尝试master分支：
+# git push origin master
+
+# 5. 查看提交历史
+git log --oneline -n 5
+
+echo "🎉 Git同步完成！"

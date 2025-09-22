@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block title %}首页 - 小学英语单词复习应用{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/index.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <!-- 欢迎区域 -->
+    <section class="welcome-section">
+        <div class="welcome-content">
+            <h1 class="welcome-title">🎓 小学英语单词复习应用</h1>
+            <p class="welcome-description">
+                专为小学3-6年级学生设计的人教版PEP教材英语单词复习背诵应用<br>
+                提供系统化的单词学习和测验功能，帮助学生有效记忆和掌握英语词汇
+            </p>
+            
+            {% if not current_user %}
+            <div class="welcome-actions">
+                <a href="{{ url_for('main.select_user') }}" class="btn btn-primary btn-lg">
+                    👤 选择用户开始学习
+                </a>
+                <a href="{{ url_for('main.create_user') }}" class="btn btn-secondary btn-lg">
+                    ➕ 创建新用户
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        
+        {% if current_user %}
+        <div class="user-welcome">
+            <h2>欢迎回来，{{ current_user.username }}！</h2>
+            <p class="user-grade">当前年级：{{ current_user.grade }}年级</p>
+        </div>
+        {% endif %}
+    </section>
+
+    {% if current_user %}
+    <!-- 主功能区 -->
+    <section class="main-functions">
+        <div class="function-grid">
+            <!-- 开始学习卡片 -->
+            <div class="function-card study-card">
+                <div class="card-icon">📖</div>
+                <h3 class="card-title">开始学习</h3>
+                <p class="card-description">
+                    系统化学习单词，包含自然拼读和趣味联想记忆法
+                </p>
+                <div class="card-actions">
+                    <a href="{{ url_for('main.study_page', user_id=current_user.id) }}" class="btn btn-primary">
+                        立即学习
+                    </a>
+                </div>
+            </div>
+
+            <!-- 进行测验卡片 -->
+            <div class="function-card test-card">
+                <div class="card-icon">📝</div>
+                <h3 class="card-title">进行测验</h3>
+                <p class="card-description">
+                    多种测试模式，检验学习成果，巩固记忆效果
+                </p>
+                <div class="card-actions">
+                    <a href="{{ url_for('main.test_page', user_id=current_user.id) }}" class="btn btn-primary">
+                        开始测验
+                    </a>
+                </div>
+            </div>
+
+            <!-- 学习进度卡片 -->
+            <div class="function-card progress-card">
+                <div class="card-icon">📊</div>
+                <h3 class="card-title">学习进度</h3>
+                <p class="card-description">
+                    查看学习统计，了解掌握情况，制定学习计划
+                </p>
+                <div class="card-actions">
+                    <a href="{{ url_for('main.dashboard', user_id=current_user.id) }}" class="btn btn-primary">
+                        查看进度
+                    </a>
+                </div>
+            </div>
+
+            <!-- 词库管理卡片 -->
+            <div class="function-card vocab-card">
+                <div class="card-icon">📚</div>
+                <h3 class="card-title">词库管理</h3>
+                <p class="card-description">
+                    浏览和管理词库，支持在线更新和手动导入
+                </p>
+                <div class="card-actions">
+                    <a href="{{ url_for('main.word_list') }}" class="btn btn-secondary">
+                        管理词库
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习统计区 -->
+    <section class="stats-section">
+        <h2 class="stats-title">📈 我的学习数据</h2>
+        <div class="stats-grid" id="userStatsGrid">
+            <!-- 通过JavaScript动态加载学习统计 -->
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- 词库统计区 -->
+    <section class="library-stats">
+        <h2 class="stats-title">📚 词库概况</h2>
+        {% if word_stats %}
+        <div class="library-overview">
+            <div class="stat-item">
+                <span class="stat-number">{{ word_stats.total_words }}</span>
+                <span class="stat-label">总单词数</span>
+            </div>
+            
+            {% if grades %}
+            <div class="grade-stats">
+                {% for grade in grades %}
+                    {% set grade_count = word_stats.grade_stats|selectattr("grade", "equalto", grade)|map(attribute="count")|first or 0 %}
+                    <div class="grade-item">
+                        <span class="grade-number">{{ grade }}年级</span>
+                        <span class="grade-count">{{ grade_count }}个单词</span>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- 功能特色介绍 -->
+    <section class="features-section">
+        <h2 class="features-title">✨ 应用特色</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🔤</div>
+                <h4>自然拼读拆分</h4>
+                <p>将单词按照发音规律进行分解，帮助掌握拼读技巧</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">💭</div>
+                <h4>趣味联想记忆</h4>
+                <p>通过故事、图像等方式建立联想，提高记忆效率</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">📊</div>
+                <h4>智能进度跟踪</h4>
+                <p>实时记录学习进度，分析掌握程度，个性化推荐</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">🎯</div>
+                <h4>多样化测验</h4>
+                <p>中译英、英译中等多种测试模式，全方位检验学习效果</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    {% if current_user %}
+    // 加载用户学习统计
+    loadUserStats({{ current_user.id }});
+    {% endif %}
+});
+
+{% if current_user %}
+async function loadUserStats(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}/dashboard`);
+        const data = await response.json();
+        
+        if (data.success) {
+            renderUserStats(data.data);
+        }
+    } catch (error) {
+        console.error('加载用户统计失败:', error);
+    }
+}
+
+function renderUserStats(stats) {
+    const container = document.getElementById('userStatsGrid');
+    
+    const html = `
+        <div class="stat-card">
+            <div class="stat-icon">📖</div>
+            <div class="stat-content">
+                <div class="stat-number">${stats.study_progress.total_studied}</div>
+                <div class="stat-label">已学习单词</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-content">
+                <div class="stat-number">${stats.study_progress.mastered}</div>
+                <div class="stat-label">已掌握单词</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-content">
+                <div class="stat-number">${stats.study_progress.mastery_rate}%</div>
+                <div class="stat-label">掌握率</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-content">
+                <div class="stat-number">${stats.test_statistics.total_tests}</div>
+                <div class="stat-label">测验次数</div>
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
+{% endif %}
+</script>
+{% endblock %}

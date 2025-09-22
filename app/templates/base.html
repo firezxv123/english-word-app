@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}小学英语单词复习应用{% endblock %}</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base/variables.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base/typography.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/buttons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/cards.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/forms.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/navigation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/ux-enhancer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive/mobile.css') }}">
+    {% block extra_css %}{% endblock %}
+    
+    <!-- Meta -->
+    <meta name="description" content="小学英语单词复习背诵应用，适合3-6年级学生学习人教版PEP教材单词">
+    <meta name="keywords" content="小学英语,单词复习,背诵,测验,人教版PEP">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ url_for('main.index') }}" class="brand-link">
+                    📚 小学英语单词复习
+                </a>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                {% if current_user %}
+                    <a href="{{ url_for('main.dashboard', user_id=current_user.id) }}" class="nav-link">
+                        📊 仪表板
+                    </a>
+                    <a href="{{ url_for('main.study_page', user_id=current_user.id) }}" class="nav-link">
+                        📖 开始学习
+                    </a>
+                    <a href="{{ url_for('main.test_page', user_id=current_user.id) }}" class="nav-link">
+                        📝 进行测验
+                    </a>
+                    <a href="{{ url_for('main.word_list') }}" class="nav-link">
+                        📚 词库管理
+                    </a>
+                    <a href="{{ url_for('main.export_page') }}" class="nav-link">
+                        📤 数据导出
+                    </a>
+                    <a href="{{ url_for('main.system_info') }}" class="nav-link">
+                        ⚙️ 系统管理
+                    </a>
+                    <div class="nav-user">
+                        <span class="user-info">👤 {{ current_user.username }} ({{ current_user.grade }}年级)</span>
+                        <a href="{{ url_for('main.select_user') }}" class="btn btn-outline-sm">切换用户</a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('main.select_user') }}" class="nav-link">
+                        👤 选择用户
+                    </a>
+                    <a href="{{ url_for('main.create_user') }}" class="nav-link">
+                        ➕ 创建用户
+                    </a>
+                    <a href="{{ url_for('main.word_list') }}" class="nav-link">
+                        📚 词库浏览
+                    </a>
+                    <a href="{{ url_for('main.export_page') }}" class="nav-link">
+                        📤 数据导出
+                    </a>
+                    <a href="{{ url_for('main.system_info') }}" class="nav-link">
+                        ⚙️ 系统信息
+                    </a>
+                {% endif %}
+            </div>
+            
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main class="main-content">
+        <!-- Flash消息 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            <span>{{ message }}</span>
+                            <button type="button" class="alert-close" onclick="this.parentElement.remove()">×</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- 底部版本信息 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="version-info">
+                <span>版本: v1.0.0</span>
+                <span>更新时间: 2025-01-07</span>
+            </div>
+            <div class="footer-links">
+                <span>© 2025 小学英语单词复习应用</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/services/api-client.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/utils/helpers.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modules/audio-player.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modules/form-validator.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modules/ux-enhancer.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+
+    <script>
+        // 初始化应用
+        document.addEventListener('DOMContentLoaded', function() {
+            // 导航菜单切换
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (navToggle) {
+                navToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    navToggle.classList.toggle('active');
+                });
+            }
+
+            // 自动隐藏Flash消息
+            setTimeout(function() {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(function(alert) {
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 300);
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

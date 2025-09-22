@@ -1,0 +1,440 @@
+[
+  {
+    "word": "taller",
+    "chinese_meaning": "更高的",
+    "grade": 6,
+    "unit": 7
+  },
+  {
+    "word": "shorter",
+    "chinese_meaning": "更短的",
+    "grade": 6,
+    "unit": 7
+  },
+  {
+    "word": "stronger",
+    "chinese_meaning": "更强壮的",
+    "grade": 6,
+    "unit": 7
+  },
+  {
+    "word": "older",
+    "chinese_meaning": "年龄更大的",
+    "grade": 6,
+    "unit": 7
+  },
+  {
+    "word": "younger",
+    "chinese_meaning": "更年轻的",
+    "grade": 6,
+    "unit": 7
+  },
+  {
+    "word": "bigger",
+    "chinese_meaning": "更大的",
+    "grade": 6,
+    "unit": 7
+  },
+  {
+    "word": "heavier",
+    "chinese_meaning": "更重的",
+    "grade": 6,
+    "unit": 7
+  },
+  {
+    "word": "longer",
+    "chinese_meaning": "更长的",
+    "grade": 6,
+    "unit": 7
+  },
+  {
+    "word": "thinner",
+    "chinese_meaning": "更瘦的",
+    "grade": 6,
+    "unit": 7
+  },
+  {
+    "word": "smaller",
+    "chinese_meaning": "更小的",
+    "grade": 6,
+    "unit": 7
+  },
+  {
+    "word": "have a fever",
+    "chinese_meaning": "发烧",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "have a cold",
+    "chinese_meaning": "感冒",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "have a toothache",
+    "chinese_meaning": "牙疼",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "have a headache",
+    "chinese_meaning": "头疼",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "have a sore throat",
+    "chinese_meaning": "喉咙疼",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "matter",
+    "chinese_meaning": "事情",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "sore",
+    "chinese_meaning": "疼的",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "hurt",
+    "chinese_meaning": "疼痛",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "nose",
+    "chinese_meaning": "鼻子",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "tired",
+    "chinese_meaning": "疲劳的",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "excited",
+    "chinese_meaning": "兴奋的",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "angry",
+    "chinese_meaning": "生气的",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "happy",
+    "chinese_meaning": "高兴的",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "bored",
+    "chinese_meaning": "无聊的",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "sad",
+    "chinese_meaning": "忧伤的",
+    "grade": 6,
+    "unit": 8
+  },
+  {
+    "word": "last weekend",
+    "chinese_meaning": "上一个周末",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "visited",
+    "chinese_meaning": "拜访",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "did",
+    "chinese_meaning": "做",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "went",
+    "chinese_meaning": "去",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "park",
+    "chinese_meaning": "公园",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "swimming",
+    "chinese_meaning": "游泳",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "read",
+    "chinese_meaning": "读",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "played",
+    "chinese_meaning": "玩",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "washed",
+    "chinese_meaning": "洗",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "watched",
+    "chinese_meaning": "看",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "cleaned",
+    "chinese_meaning": "打扫",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "stayed",
+    "chinese_meaning": "停留",
+    "grade": 6,
+    "unit": 9
+  },
+  {
+    "word": "learned Chinese",
+    "chinese_meaning": "学汉语",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "sang and danced",
+    "chinese_meaning": "唱歌和跳舞",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "ate good food",
+    "chinese_meaning": "吃好吃的食物",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "took pictures",
+    "chinese_meaning": "照相",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "climbed",
+    "chinese_meaning": "爬",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "had",
+    "chinese_meaning": "有",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "bought",
+    "chinese_meaning": "买",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "present",
+    "chinese_meaning": "礼物",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "rowed",
+    "chinese_meaning": "划",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "boat",
+    "chinese_meaning": "船",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "saw",
+    "chinese_meaning": "看见",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "elephant",
+    "chinese_meaning": "大象",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "went skiing",
+    "chinese_meaning": "去滑雪",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "went ice-skating",
+    "chinese_meaning": "去滑冰",
+    "grade": 6,
+    "unit": 10
+  },
+  {
+    "word": "how",
+    "chinese_meaning": "怎么",
+    "grade": 6,
+    "unit": 11
+  },
+  {
+    "word": "get",
+    "chinese_meaning": "到达",
+    "grade": 6,
+    "unit": 11
+  },
+  {
+    "word": "to",
+    "chinese_meaning": "到",
+    "grade": 6,
+    "unit": 11
+  },
+  {
+    "word": "subway",
+    "chinese_meaning": "地铁",
+    "grade": 6,
+    "unit": 11
+  },
+  {
+    "word": "plane",
+    "chinese_meaning": "飞机",
+    "grade": 6,
+    "unit": 11
+  },
+  {
+    "word": "ship",
+    "chinese_meaning": "船",
+    "grade": 6,
+    "unit": 11
+  },
+  {
+    "word": "on foot",
+    "chinese_meaning": "步行",
+    "grade": 6,
+    "unit": 11
+  },
+  {
+    "word": "usually",
+    "chinese_meaning": "通常",
+    "grade": 6,
+    "unit": 11
+  },
+  {
+    "word": "sometimes",
+    "chinese_meaning": "有时候",
+    "grade": 6,
+    "unit": 11
+  },
+  {
+    "word": "country",
+    "chinese_meaning": "国家",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "mean",
+    "chinese_meaning": "意思是",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "drive",
+    "chinese_meaning": "驾驶",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "right",
+    "chinese_meaning": "右边的",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "left",
+    "chinese_meaning": "左边的",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "England",
+    "chinese_meaning": "英国",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "Australia",
+    "chinese_meaning": "澳大利亚",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "however",
+    "chinese_meaning": "但是",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "side",
+    "chinese_meaning": "边",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "difference",
+    "chinese_meaning": "不同",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "same",
+    "chinese_meaning": "相同的",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "every",
+    "chinese_meaning": "每一个",
+    "grade": 6,
+    "unit": 12
+  },
+  {
+    "word": "must",
+    "chinese_meaning": "必须",
+    "grade": 6,
+    "unit": 12
+  }
+]

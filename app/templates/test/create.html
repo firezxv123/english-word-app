@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}创建测验 - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="create-test-page">
+    <div class="page-header">
+        <h1>📝 创建测验</h1>
+        <p class="text-secondary">为 {{ user.username }} 创建新的测验</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('main.start_test', user_id=user.id) }}" class="test-form">
+        <div class="form-section">
+            <h3>测验类型</h3>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="test_type" value="cn_to_en" required>
+                    <div class="option-content">
+                        <div class="option-title">🇨🇳 → 🇺🇸 中译英</div>
+                        <div class="option-desc">看中文选择对应的英文单词</div>
+                    </div>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="test_type" value="en_to_cn" required>
+                    <div class="option-content">
+                        <div class="option-title">🇺🇸 → 🇨🇳 英译中</div>
+                        <div class="option-desc">看英文选择对应的中文含义</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>测验范围</h3>
+            <div class="range-options">
+                <div class="form-group">
+                    <label for="grade">年级</label>
+                    <select name="grade" id="grade" class="form-select">
+                        <option value="{{ user.grade }}" selected>{{ user.grade }}年级（当前）</option>
+                        {% for g in range(3, 7) %}
+                            {% if g != user.grade %}
+                            <option value="{{ g }}">{{ g }}年级</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="unit">单元（可选）</label>
+                    <select name="unit" id="unit" class="form-select">
+                        <option value="">全部单元</option>
+                        {% if units %}
+                            {% for unit in units %}
+                            <option value="{{ unit }}">第{{ unit }}单元</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    <div class="form-help">不选择单元将包含该年级所有单词</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>测验设置</h3>
+            <div class="form-group">
+                <label for="question_count">题目数量</label>
+                <input type="number" name="question_count" id="question_count" 
+                       value="10" min="5" max="50" class="form-input">
+                <div class="form-help">建议10-20题，不超过50题</div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-lg">
+                🚀 开始测验
+            </button>
+            <a href="{{ url_for('main.test_page', user_id=user.id) }}" class="btn btn-ghost">
+                取消
+            </a>
+        </div>
+    </form>
+</div>
+
+<style>
+.create-test-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+}
+
+.test-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xxl);
+}
+
+.form-section h3 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: var(--spacing-sm);
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.radio-option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.radio-option:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-light);
+}
+
+.radio-option input[type="radio"]:checked + .option-content {
+    color: var(--primary-color);
+}
+
+.radio-option input[type="radio"] {
+    margin-top: 2px;
+}
+
+.option-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+}
+
+.option-desc {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.range-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.form-select,
+.form-input {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-md);
+}
+
+.form-help {
+    margin-top: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    padding-top: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+    .range-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+}
+</style>
+
+<script>
+// 动态更新单元选项
+document.getElementById('grade').addEventListener('change', function() {
+    const grade = this.value;
+    const unitSelect = document.getElementById('unit');
+    
+    // 清空当前选项
+    unitSelect.innerHTML = '<option value="">全部单元</option>';
+    
+    // 根据年级添加单元选项
+    let maxUnit = 12;
+    if (grade == 6) {
+        maxUnit = 10; // 六年级只有10个单元
+    }
+    
+    for (let i = 1; i <= maxUnit; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = `第${i}单元`;
+        unitSelect.appendChild(option);
+    }
+});
+</script>
+{% endblock %}
